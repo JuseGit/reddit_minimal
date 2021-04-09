@@ -1,10 +1,10 @@
 import React from 'react';
 import { Provider } from 'react-redux';
 import { createStore as reduxCreateStore, combineReducers } from 'redux';
-import { default as topicsReducer } from './topics/topicsSlice.js';
+import { default as subredditsReducer } from './subreddits/subredditsSlice.js';
 
 const rootReducer = combineReducers({
-	topics: topicsReducer,
+	subreddits: subredditsReducer,
 })
 
 const createStore = () => reduxCreateStore(rootReducer);
