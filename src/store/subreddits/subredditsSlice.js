@@ -18,4 +18,6 @@ const subredditsSlice = createSlice({
 
 });
 
+export const selectSubreddits = (state) => state.subreddits.subreddits;
+
 export default subredditsSlice.reducer;
