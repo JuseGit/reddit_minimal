@@ -9,6 +9,11 @@ const rootReducer = combineReducers({
 
 const createStore = () => reduxCreateStore(rootReducer);
 
-export default ({ element }) => (
-	<Provider store={createStore()}> {element} </Provider>
+const StoreWrapper = ({children}) => (
+	<Provider store={createStore()}> {children} </Provider>
 )
+// export default ({ element }) => (
+// 	<Provider store={createStore()}> {element} </Provider>
+// )
+
+export default StoreWrapper;

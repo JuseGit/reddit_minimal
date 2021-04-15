@@ -4,8 +4,19 @@
  * See: https://www.gatsbyjs.com/docs/ssr-apis/
  */
 
- /**
-  *	Wraps the root element with the store Provider.
-  *	This allows the entire application to see the state managed by Redux.
-  */
-export { default as wrapRootElement } from './src/store/storeWrapper';
+ import React from "react";
+ import StoreWrapper from "./src/store/storeWrapper.js"
+
+/**
+ *	Wraps the root element with the store Provider.
+ *	This allows the entire application to see the state managed by Redux.
+ */
+//export { default as wrapRootElement } from './src/store/storeWrapper';
+
+export const wrapRootElement = ({ element }) => {
+  return (
+    <StoreWrapper>
+      {element}
+    </StoreWrapper>
+  )
+}
