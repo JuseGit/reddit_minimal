@@ -1,6 +1,6 @@
 import React from 'react';
 import { useSelector } from 'react-redux'
-import { selectPosts } from '../store/subreddits/subredditsSlice.js';
+import { selectPosts } from '../store/posts/postsSlice.js';
 
 
 const PostsList = () => {
