@@ -1,7 +1,6 @@
 import React from 'react';
-import { shallow } from 'enzyme';
 import * as ReactReduxHooks from 'react-redux';
-
+import { render } from '@testing-library/react'
 import PostsList from '../postsList.js';
 
 
@@ -11,15 +10,18 @@ describe('components/postsList', () => {
 
 	beforeEach( () => {
 		useSelectorSpy = jest.spyOn(ReactReduxHooks, 'useSelector');
-	})
+	});
 
-	it('renders a list of posts for a subreddit', () => {
-		const items = [{user: 'User1', name: 'Post1', img: undefined}, {user: 'User2', name: 'Post1', img: undefined}];
 
-		useSelectorSpy.mockReturnValue([{user: 'User1', name: 'Post1', img: undefined}, {user: 'User2', name: 'Post1', img: undefined}]);
-    	const wrapper = shallow(<PostsList />);
+	it('renders a post item for a subreddit (@testing-library/react)', () => {
+		const posts = [{topic: 'Post1', name: 'User2', postedTime:"12", nComments:"5"}];
+		const postContentExp = Object.values(posts[0]);
 
-	    // Check if an element in the Component exists
-	    expect(wrapper.contains(items.map((item) => <li key={item.name} className="item">{item.name}</li>))).toBeTruthy();
+		useSelectorSpy.mockReturnValue(posts);
+
+		const { getByTestId } = render(<PostsList />);
+		const postContent = getByTestId('postContent').textContent.split(' ');
+
+		expect(postContent).toEqual(postContentExp);
 	});
 });

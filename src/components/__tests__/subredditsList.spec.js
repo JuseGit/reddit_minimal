@@ -1,5 +1,5 @@
 import React from 'react';
-import { shallow } from 'enzyme';
+import { render } from '@testing-library/react'
 import * as ReactReduxHooks from 'react-redux';
 
 import SubredditsList from '../subredditsList.js';
@@ -13,13 +13,15 @@ describe('components/subredditsList', () => {
 		useSelectorSpy = jest.spyOn(ReactReduxHooks, 'useSelector');
 	})
 
-	it('renders a list of subreddits', () => {
-		const items = [{name: 'subreddit1', img: undefined}, {name: 'subreddit2', img: undefined}];
+	it('renders a subreddit (@testing-library/react)', () => {
+		const subreddits = [{name: 'subreddit1'}];
+		const subrContentExp = Object.values(subreddits[0]);
 
-		useSelectorSpy.mockReturnValue([{name: 'subreddit1', img: undefined}, {name: 'subreddit2', img: undefined}]);
-    	const wrapper = shallow(<SubredditsList />);
+		useSelectorSpy.mockReturnValue(subreddits);
 
-	    // Check if an element in the Component exists
-	    expect(wrapper.contains(items.map((item) => <li key={item.name} className="item">{item.name}</li>))).toBeTruthy();
+		const { getByTestId } = render(<SubredditsList />);
+		const subrContent = getByTestId('subrContent').textContent.split(' ');
+
+		expect(subrContent).toEqual(subrContentExp);
 	});
 });
