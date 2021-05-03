@@ -6,32 +6,3 @@
 	list-style-type: none;
 	border: 2px solid magenta;
 }
-
-.postItem {
-	margin-bottom: 2em;
-	border: 2px solid magenta;
-	border-radius: 5px;
-	box-shadow: 1px 8px 10px LightGrey;
-	padding: 1em;
-}
-
-.postItem:hover {
-	box-shadow: 1px 8px 20px LightGrey;
-}
-
-.postTopic {
-	margin-bottom: 2em;
-	font-weight: bold;
-}
-
-.footer_sep {
-	width: 100%;
-	color: grey;
-	margin-bottom: 0;
-}
-
-.postFooter {
-	display: flex;
-	justify-content: space-between;
-	font-size: 14px;
-}
