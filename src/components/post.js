@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import * as styles from './post.module.css'
 import { StaticImage } from 'gatsby-plugin-image'
+import CommentsList from './commentsList.js'
 
 
 const Post = ({ name, topic }) => {
@@ -10,11 +11,11 @@ const Post = ({ name, topic }) => {
 
 	return (
 		<div className={styles.postWrapper}>
-			<div data-testid='post-wrap'>
+			<article aria-label="user-post">
 				<p className={styles.postTopic}>{topic} </p>
 				<hr className={styles.footer_sep} />
 				<div className={styles.postFooter}>
-					<div style={{height:"100%", alignSelf:"center", border:"2px solid green"}}>User2 </div>
+					<div style={{height:"100%", alignSelf:"center", border:"2px solid green"}}>{name} </div>
 					<div style={{alignSelf:"center", border:"2px solid green"}}>12 </div>
 					<div className={styles.commentBoxBtn} data-testid='show-comments-btn' onClick={() => (setShowCommentBox(!showCommnetBox))}>
 						<StaticImage
@@ -28,10 +29,11 @@ const Post = ({ name, topic }) => {
 						<p style={{alignSelf:"center", border:"2px solid green"}}>5</p>
 					</div>
 				</div>
-			</div>
+			</article>
 
-			<div className={styles.commentBox} style={commentBoxStyle} data-testid='comment-box'>
-			</div>
+			<article className={styles.commentBox} style={commentBoxStyle} aria-label="post-comments">
+				<CommentsList postName={name}/>
+			</article>
 		</div>
 	);
 }

@@ -1,40 +1,37 @@
 import React from 'react';
 import * as ReactReduxHooks from 'react-redux';
-import { render, fireEvent } from '@testing-library/react'
+import { render, within } from '../../test-utils.js'
 import PostsList from '../postsList.js';
 
 
 describe('components/postsList', () => {
+	let initialState = {
+		posts : {
+			posts: [],
+			isLoadingComments: false,
+			hasError: false
+		}
+	}
 
-	let useSelectorSpy;
 
-	beforeEach( () => {
-		useSelectorSpy = jest.spyOn(ReactReduxHooks, 'useSelector');
+	it('renders an empty list if no post available (@testing-library/react)', () => {
+		const { getByRole } = render(<PostsList />, {initialState: initialState});
+
+		const postsList = getByRole('list');
+
+		expect(postsList.textContent).toBe('No comments available.');
 	});
 
+	it('renders a list of posts (@testing-library/react)', () => {
+		const posts = [{name: 'Post1', topic: 'User2', postedTime:"12", nComments:"5"}];
+		initialState.posts.posts = posts;
 
-	// it('renders a post item for a subreddit (@testing-library/react)', () => {
-	// 	const posts = [{topic: 'Post1', name: 'User2', postedTime:"12", nComments:"5"}];
-	// 	const postContentExp = Object.values(posts[0]);
-	//
-	// 	useSelectorSpy.mockReturnValue(posts);
-	//
-	// 	const { getByTestId } = render(<PostsList />);
-	// 	const postContent = getByTestId('postContent').textContent.split(' ');
-	//
-	// 	expect(postContent).toEqual(postContentExp);
-	// });
+		const { getByRole } = render(<PostsList />, {initialState: initialState});
 
-	it('shows the comments list (@testing-library/react)', () => {
-		const posts = [{topic: 'Post1', name: 'User2', postedTime:"12", nComments:"5"}];
+		const postsList = getByRole('list');
+		const { getAllByRole } = within(postsList);
+  		const items = getAllByRole('listitem');
 
-		useSelectorSpy.mockReturnValue(posts);
-
-		const { getByTestId } = render(<PostsList />);
-		const showComBtn = getByTestId('show-comments-btn');
-		const commentBox = getByTestId('comment-box');
-		fireEvent.click(showComBtn);
-
-		expect(commentBox).toBeVisible();
+		expect(items.length > 0).toBeTruthy();
 	});
 });

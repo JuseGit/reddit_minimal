@@ -9,7 +9,7 @@ const subreddit1Posts = [
 	},
 	{
 		user: 'User2',
-		name: 'Post1',
+		name: 'Post2',
 		img: undefined
 	}
 ];
@@ -32,18 +32,7 @@ const postsSlice = createSlice({
 	name: 'posts',
 
 	initialState: {
-		posts: [
-			{
-				user: 'User1',
-				name: 'Post1',
-				img: undefined
-			},
-			{
-				user: 'User2',
-				name: 'Post1',
-				img: undefined
-			}
-		],
+		posts: subreddit1Posts,
 		isLoadingPosts: false,
 		hasError: false
 	},

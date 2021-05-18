@@ -10,7 +10,7 @@ const emptyState = {
 		  },
 		  {
 			  user: 'User2',
-			  name: 'Post1',
+			  name: 'Post2',
 			  img: undefined
 		  }
     ],

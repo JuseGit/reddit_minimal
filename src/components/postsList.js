@@ -8,12 +8,20 @@ import Post from './post.js'
 const PostsList = () => {
 	const posts = useSelector(selectPosts);
 
+	const mapPosts = (posts) => {
+		if( posts.length === 0 ) {
+			return 'No comments available.';
+		}
+
+		return posts.map((post) =>	<li key={post.name} data-testid='postContent'>
+										<Post name={post.name} topic={post.topic} />
+									</li>);
+	}
+
 	return (
 		<section>
 			<ul className={styles.listContainer}>
-				{posts.map((post) => <li key={post.name} data-testid='postContent'>
-					<Post name={post.name} topic={post.topic} />
-				</li>)}
+				{mapPosts(posts)}
 			</ul>
 		</section>
 	);

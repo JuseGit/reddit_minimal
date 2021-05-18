@@ -1,27 +1,33 @@
 import React from 'react';
-import { render } from '@testing-library/react'
+import { render, screen, fireEvent, within } from '../../test-utils.js';
 import * as ReactReduxHooks from 'react-redux';
 
 import SubredditsList from '../subredditsList.js';
 
 
 describe('components/subredditsList', () => {
+	let initialState = {
+		subreddits: {
+			subreddits: []
+		}
+	}
 
-	let useSelectorSpy;
+	it('renders an empty list if no subreddits available (@testing-library/react)', () => {
+		const { getByRole } = render(<SubredditsList />, {initialState: initialState});
 
-	beforeEach( () => {
-		useSelectorSpy = jest.spyOn(ReactReduxHooks, 'useSelector');
-	})
+		const subrList = getByRole('list');
 
-	it('renders a subreddit (@testing-library/react)', () => {
-		const subreddits = [{name: 'subreddit1'}];
-		const subrContentExp = Object.values(subreddits[0]);
+		expect(subrList.textContent).toBe('No subreddit available.');
+	});
 
-		useSelectorSpy.mockReturnValue(subreddits);
+	it('renders a list of subreddits (@testing-library/react)', () => {
+		initialState.subreddits.subreddits = [{name: 'subreddit1'}];
+		const { getByRole } = render(<SubredditsList />, {initialState: initialState});
 
-		const { getByTestId } = render(<SubredditsList />);
-		const subrContent = getByTestId('subrContent').textContent.split(' ');
+		const subrList = getByRole( 'list' );
+		const { getAllByRole } = within(subrList);
+  		const items = getAllByRole('listitem');
 
-		expect(subrContent).toEqual(subrContentExp);
+		expect(items.length > 0).toBeTruthy();
 	});
 });
