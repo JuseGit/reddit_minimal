@@ -3,13 +3,7 @@ import { Selector } from 'redux-testkit';
 
 
 const emptyState = {
-	subreddits: [
-  	  {
-  		  name: 'test',
-  		  img: undefined,
-  		  description: 'test'
-  	  }
-    ],
+	subreddits: [],
     isLoadingSubreddits: false,
     hasError: false
 };

@@ -21,7 +21,7 @@ describe('components/subredditsList', () => {
 	});
 
 	it('renders a list of subreddits (@testing-library/react)', () => {
-		initialState.subreddits.subreddits = [{name: 'subreddit1'}];
+		initialState.subreddits.subreddits = [{subreddit: 'subreddit1'}];
 		const { getByRole } = render(<SubredditsList />, {initialState: initialState});
 
 		const subrList = getByRole( 'list' );

@@ -10,8 +10,8 @@
 .topicItem {
 	display: inline-flex;
 	width: 100%;
-	margin: 1em auto;
-	border: 2px solid magenta;
+	border: 2px solid red;
+	margin: 0;
 	padding: 1em;
 }
 
