@@ -1,15 +1,15 @@
-import { createAsyncThunk, createSlice } from '@reduxjs/toolkit'
+import { createAsyncThunk, createSlice } from '@reduxjs/toolkit';
+import axios from 'axios';
 
 
 export const fetchSubreddits = createAsyncThunk (
 	'subreddits/fetchSubreddits',
 	async () => {
-		const response = await fetch('https://www.reddit.com/best.json?limit=10&t=year');
-		const redditData = await response.json();
-
-		//console.log(redditData.data.children);
+		const response = await axios.get('https://www.reddit.com/best.json?limit=10&t=year');
+		//console.log(response.data.data);
+		
 		// This is the array with subreddits data.
-		return redditData.data.children;
+		return response.data.data.children;
 	}
 )
 

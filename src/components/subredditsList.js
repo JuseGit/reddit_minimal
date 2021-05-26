@@ -12,7 +12,7 @@ const SubredditsList = () => {
 
 	useEffect( () => {
 		dispatch(fetchSubreddits());
-	}, []);
+	}, [dispatch]);
 
 	const mapSubr = (subreddits) => {
 		if( subreddits.length === 0 ) {
