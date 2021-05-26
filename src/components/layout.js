@@ -25,7 +25,7 @@ const Layout = ({ children }) => {
  // <Header siteTitle={data.site.siteMetadata?.title || `Title`} />
   return (
     <>
-      <div style={{width:"100vw"}}>
+      <div>
         <main>{children}</main>
       </div>
     </>

@@ -33,7 +33,7 @@ const SubredditsList = () => {
 	}
 
 	return (
-		<section>
+		<section className={styles.sectionWrapper}>
 			<h2 className={styles.listTitle}>Subreddits</h2>
 			<ul className={styles.listContainer}>
 				{mapSubr(subreddits)}

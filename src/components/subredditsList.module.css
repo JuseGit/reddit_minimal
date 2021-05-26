@@ -4,13 +4,13 @@
 
 .listContainer {
 	list-style-type: none;
-	border: 2px solid magenta;
+	border: 2px solid green;
+
 }
 
 .topicItem {
 	display: inline-flex;
 	width: 100%;
-	border: 2px solid red;
 	margin: 0;
 	padding: 1em;
 }
