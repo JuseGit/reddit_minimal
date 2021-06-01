@@ -1,3 +1,8 @@
+.sectionWrapper {
+	background-color: white;
+	border: 2px solid white;
+}
+
 .listTitle {
 	margin: 1em;
 }
@@ -5,7 +10,6 @@
 .listContainer {
 	list-style-type: none;
 	border: 2px solid green;
-
 }
 
 .topicItem {

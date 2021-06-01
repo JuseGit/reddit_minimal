@@ -1,4 +1,6 @@
-import { createSlice } from '@reduxjs/toolkit'
+import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
+import axios from 'axios';
+import { getTimeDiff } from '../../lib/date_conversions.js'
 
 
 const subreddit1Posts = [
@@ -28,11 +30,23 @@ const subreddit2Posts = [
 ];
 
 
+export const fetchPosts = createAsyncThunk (
+	'posts/fetchPosts',
+	async (subreddit) => {
+		const response = await axios.get(`https://www.reddit.com/r/${subreddit}.json`);
+		//console.log(response.data.data);
+
+		// This is the array with posts data.
+		return response.data.data.children;
+	}
+)
+
+
 const postsSlice = createSlice({
 	name: 'posts',
 
 	initialState: {
-		posts: subreddit1Posts,
+		posts: [],
 		isLoadingPosts: false,
 		hasError: false
 	},
@@ -48,6 +62,30 @@ const postsSlice = createSlice({
 		}
 	},
 
+	extraReducers: {
+		[fetchPosts.pending]: (state, action) => {
+			state.posts = [];
+			state.isLoadingPosts = true;
+			state.hasError = false;
+		},
+		[fetchPosts.fulfilled]: (state, action) => {
+			if( action.payload !== undefined ) {
+				action.payload.forEach((item, i) => {
+					const { name, title, author, created_utc, num_comments } = item.data;
+					const time_frame = getTimeDiff(created_utc);
+
+					state.posts.push( {name, title, author, time_frame, num_comments} );
+				});
+			}
+
+			state.isLoadingPosts = false;
+			state.hasError = false;
+		},
+		[fetchPosts.rejected]: (state, action) => {
+			state.isLoadingPosts = false;
+			state.hasError = true;
+		}
+	}
 });
 
 export const { updatePosts } = postsSlice.actions;

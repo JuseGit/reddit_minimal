@@ -5,3 +5,7 @@
 .listContainer {
 	list-style-type: none;
 }
+
+.postWrapper {
+	margin-bottom: 30px;
+}

@@ -1,7 +1,7 @@
 import React, { useEffect } from 'react';
 import { StaticImage } from 'gatsby-plugin-image'
 import { useSelector, useDispatch } from 'react-redux'
-import { selectSubreddits, fetchSubreddits } from '../store/subreddits/subredditsSlice.js';
+import { selectSubreddits, fetchSubreddits, updateCurSubreddit } from '../store/subreddits/subredditsSlice.js';
 import * as styles from './subredditsList.module.css'
 
 
@@ -19,7 +19,7 @@ const SubredditsList = () => {
 			return 'No subreddit available.';
 		}
 
-		return subreddits.map((subreddit) => <li key={subreddit.subreddit} className={styles.topicItem} data-testid="subrContent">
+		return subreddits.map((item) => <li key={item.name} className={styles.topicItem} onClick={() => dispatch(updateCurSubreddit(item.subreddit))} data-testid="subrContent">
 												<StaticImage
 												  src="../images/gatsby-astronaut.png"
 												  width={30}
@@ -28,7 +28,7 @@ const SubredditsList = () => {
 												  alt="A Gatsby astronaut"
 												  style={{ borderRadius: "20px", border:"2px solid green", marginRight: "10px" }}
 												/>
-												<p style={{alignSelf:"center"}}>{subreddit.subreddit}</p>
+												<p style={{alignSelf:"center"}}>{item.subreddit}</p>
 											</li>)
 	}
 
