@@ -8,7 +8,7 @@ describe('components/postsList', () => {
 	let initialState = {
 		posts : {
 			posts: [],
-			isLoadingComments: false,
+			isLoadingPosts: false,
 			hasError: false
 		}
 	}
@@ -23,7 +23,8 @@ describe('components/postsList', () => {
 	});
 
 	it('renders a list of posts (@testing-library/react)', () => {
-		const posts = [{name: 'Post1', topic: 'User2', postedTime:"12", nComments:"5"}];
+		const time_frame = { name: 'hours', val: 3 };
+		const posts = [{name: 'Post1', topic: 'User2', time_frame: time_frame, num_comments:5}];
 		initialState.posts.posts = posts;
 
 		const { getByRole } = render(<PostsList />, {initialState: initialState});

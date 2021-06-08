@@ -71,10 +71,11 @@ const postsSlice = createSlice({
 		[fetchPosts.fulfilled]: (state, action) => {
 			if( action.payload !== undefined ) {
 				action.payload.forEach((item, i) => {
-					const { name, title, author, created_utc, num_comments } = item.data;
+					const { name, title, author, created_utc, num_comments, post_hint, url } = item.data;
 					const time_frame = getTimeDiff(created_utc);
+					const img_url = post_hint !== "image" ? undefined : url;
 
-					state.posts.push( {name, title, author, time_frame, num_comments} );
+					state.posts.push( {name, title, author, time_frame, num_comments, img_url} );
 				});
 			}
 

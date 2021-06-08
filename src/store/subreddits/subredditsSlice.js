@@ -34,12 +34,13 @@ const subredditsSlice = createSlice({
 
 	extraReducers: {
 		[fetchSubreddits.pending]: (state, action) => {
-			state.subreddits = [];
+			//state.subreddits = [];
 			state.isLoadingSubreddits = true;
 			state.hasError = false;
 		},
 		[fetchSubreddits.fulfilled]: (state, action) => {
 			if( action.payload !== undefined ) {
+				state.subreddits = [];
 				action.payload.forEach((item, i) => {
 					const { name, subreddit } = item.data;
 					if(i === 0) {

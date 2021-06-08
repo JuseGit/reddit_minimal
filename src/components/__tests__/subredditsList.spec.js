@@ -21,7 +21,7 @@ describe('components/subredditsList', () => {
 	});
 
 	it('renders a list of subreddits (@testing-library/react)', () => {
-		initialState.subreddits.subreddits = [{subreddit: 'subreddit1'}];
+		initialState.subreddits.subreddits = [{name:'sub1', subreddit: 'subreddit2'}];
 		const { getByRole } = render(<SubredditsList />, {initialState: initialState});
 
 		const subrList = getByRole( 'list' );
@@ -29,6 +29,7 @@ describe('components/subredditsList', () => {
   		const items = getAllByRole('listitem');
 
 		expect(items.length > 0).toBeTruthy();
+		//expect(items.[0]).toHaveTextContent('subreddit2');
 	});
 
 	it('renders a list of subreddits when fetching is done (@testing-library/react)', async () => {

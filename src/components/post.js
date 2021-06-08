@@ -1,46 +1,12 @@
 import React, { useState } from 'react';
-import * as styles from './post.module.css'
-import { StaticImage } from 'gatsby-plugin-image'
-import CommentsList from './commentsList.js'
+import * as styles from './post.module.css';
+import { StaticImage } from 'gatsby-plugin-image';
+import { LazyLoadImage } from 'react-lazy-load-image-component';
+import CommentsList from './commentsList.js';
+import { getPostedTime } from '../lib/date_conversions.js'
 
 
-
-const getPostedTime = (time_frame) => {
-	let posted = "n/a";
-
-	switch (time_frame.name) {
-		case "seconds":
-			posted = (time_frame.val <= 1) ? `${time_frame.val} second ago` : `${time_frame.val} seconds ago`;
-			break;
-
-		case "minutes":
-			posted = (time_frame.val <= 1) ? `a minute ago` : `${time_frame.val} minutes ago`;
-			break;
-
-		case "hours":
-			posted = (time_frame.val <= 1) ? `an hour ago` : `${time_frame.val} hours ago`;
-			break;
-
-		case "days":
-			posted = (time_frame.val <= 1) ? `a day ago` : `${time_frame.val} days ago`;
-			break;
-
-		case "months":
-			posted = (time_frame.val <= 1) ? `a month ago` : `${time_frame.val} months ago`;
-			break;
-
-		case "years":
-			posted = (time_frame.val <= 1) ? `a year ago` : `${time_frame.val} years ago`;
-			break;
-
-		default: break;
-	}
-
-	return posted;
-}
-
-
-const Post = ({ name, topic, time_frame, n_comments }) => {
+const Post = ({ name, topic, time_frame, n_comments, img_url }) => {
 	const [showCommnetBox, setShowCommentBox] = useState(false);
 	let commentBoxStyle = showCommnetBox ? {display: "block", visibility: "visible"} : {display: "none", visibility: "hidden"};
 	const posted_time = getPostedTime(time_frame);
@@ -48,7 +14,10 @@ const Post = ({ name, topic, time_frame, n_comments }) => {
 	return (
 		<div className={styles.postWrapper}>
 			<article aria-label="user-post">
-				<p className={styles.postTopic}>{topic} </p>
+				<p className={styles.postTopic}>{topic}</p>
+				<div className={styles.postImgWrapper}>
+					{ img_url && <LazyLoadImage alt="post image alt" src={img_url} object-fit="cover"/> }
+				</div>
 				<hr className={styles.footer_sep} />
 				<div className={styles.postFooter}>
 					<div style={{height:"100%", alignSelf:"center", border:"2px solid green"}}>{name} </div>

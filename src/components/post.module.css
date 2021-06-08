@@ -16,6 +16,11 @@
 	font-weight: bold;
 }
 
+.postImgWrapper {
+	display: flex;
+	justify-content: center;
+}
+
 .footer_sep {
 	width: 100%;
 	color: grey;

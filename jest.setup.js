@@ -8,11 +8,10 @@ const server = setupServer (
 		const query = req.url.searchParams;
 		const limit = query.get("limit");
 		const t = query.get("t");
-		console.log(`rest GET params ${limit} ${t}`);
 
 		return res (
 			ctx.status(200),
-			ctx.json( {data: {children: [{data: {subreddit:'test'}}] }} )
+			ctx.json( {data: {children: [{data: {name: 'testkey', subreddit:'test'}}] }} )
 		)
 	})
 )

@@ -13,9 +13,9 @@
 //export { default as wrapRootElement } from './src/store/storeWrapper';
 
 export const wrapRootElement = ({ element }) => {
-  return (
-    <StoreWrapper>
-      {element}
-    </StoreWrapper>
-  )
+	return (
+		<StoreWrapper>
+			{element}
+		</StoreWrapper>
+	)
 }

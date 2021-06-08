@@ -63,3 +63,38 @@ export function getTimeDiff ( date_utc ) {
 
 	return retVal;
 }
+
+
+export const getPostedTime = (time_frame) => {
+	let posted = "n/a";
+
+	switch (time_frame.name) {
+		case "seconds":
+			posted = (time_frame.val <= 1) ? `${time_frame.val} second ago` : `${time_frame.val} seconds ago`;
+			break;
+
+		case "minutes":
+			posted = (time_frame.val <= 1) ? `a minute ago` : `${time_frame.val} minutes ago`;
+			break;
+
+		case "hours":
+			posted = (time_frame.val <= 1) ? `an hour ago` : `${time_frame.val} hours ago`;
+			break;
+
+		case "days":
+			posted = (time_frame.val <= 1) ? `a day ago` : `${time_frame.val} days ago`;
+			break;
+
+		case "months":
+			posted = (time_frame.val <= 1) ? `a month ago` : `${time_frame.val} months ago`;
+			break;
+
+		case "years":
+			posted = (time_frame.val <= 1) ? `a year ago` : `${time_frame.val} years ago`;
+			break;
+
+		default: break;
+	}
+
+	return posted;
+}

@@ -24,7 +24,7 @@ const PostsList = () => {
 		}
 
 		return posts.map((post) =>	<li key={post.name} className={styles.postWrapper} data-testid='postContent'>
-										<Post name={post.author} topic={post.title} n_comments={post.num_comments} time_frame={post.time_frame} />
+										<Post name={post.author} topic={post.title} n_comments={post.num_comments} time_frame={post.time_frame} img_url={post.img_url} />
 									</li>);
 	}
 
