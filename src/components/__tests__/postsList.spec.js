@@ -6,7 +6,11 @@ import PostsList from '../postsList.js';
 
 describe('components/postsList', () => {
 	let initialState = {
-		posts : {
+		subreddits: {
+			subreddits: [],
+			currentSubreddit: undefined
+		},
+		posts: {
 			posts: [],
 			isLoadingPosts: false,
 			hasError: false
@@ -19,19 +23,42 @@ describe('components/postsList', () => {
 
 		const postsList = getByRole('list');
 
-		expect(postsList.textContent).toBe('No comments available.');
+		expect(postsList.textContent).toBe('No posts available.');
 	});
 
 	it('renders a list of posts (@testing-library/react)', () => {
 		const time_frame = { name: 'hours', val: 3 };
-		const posts = [{name: 'Post1', topic: 'User2', time_frame: time_frame, num_comments:5}];
-		initialState.posts.posts = posts;
 
-		const { getByRole } = render(<PostsList />, {initialState: initialState});
+		const localInit = {
+			...initialState,
+			posts: {
+				posts: [{name: 'Post1', topic: 'User2', time_frame: time_frame, num_comments:5}]
+			}
+		}
+
+		const { getByRole } = render(<PostsList />, {initialState: localInit});
 
 		const postsList = getByRole('list');
 		const { getAllByRole } = within(postsList);
   		const items = getAllByRole('listitem');
+
+		expect(items.length > 0).toBeTruthy();
+	});
+
+	it('renders a list of posts after being fetched (@testing-library/react)', async () => {
+		// const posts = [{name: 'Post1', topic: 'User2', time_frame: time_frame, num_comments:5}];
+		// initialState.posts.posts = posts;
+		const localInit = {
+			...initialState,
+			subreddits: {
+				currentSubreddit: "subredditTest"
+			}
+		}
+
+		const { getByRole } = render(<PostsList />, {initialState: localInit});
+
+		const postsList = getByRole('list');
+		const items = await within(postsList).findAllByRole('listitem');
 
 		expect(items.length > 0).toBeTruthy();
 	});

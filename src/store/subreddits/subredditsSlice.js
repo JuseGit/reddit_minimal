@@ -34,7 +34,6 @@ const subredditsSlice = createSlice({
 
 	extraReducers: {
 		[fetchSubreddits.pending]: (state, action) => {
-			//state.subreddits = [];
 			state.isLoadingSubreddits = true;
 			state.hasError = false;
 		},

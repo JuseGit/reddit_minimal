@@ -3,7 +3,6 @@ import { setupServer } from 'msw/node';
 
 
 const server = setupServer (
-	//todo custom url
 	rest.get('https://www.reddit.com/best.json', (req, res, ctx) => {
 		const query = req.url.searchParams;
 		const limit = query.get("limit");
@@ -12,6 +11,21 @@ const server = setupServer (
 		return res (
 			ctx.status(200),
 			ctx.json( {data: {children: [{data: {name: 'testkey', subreddit:'test'}}] }} )
+		)
+	}),
+	rest.get('https://www.reddit.com/r/subredditTest.json', (req, res, ctx) => {
+
+		return res (
+			ctx.status(200),
+			ctx.json( {data: {children: [{data: {name: 'testkey'}}] }} )
+		)
+	}),
+
+	rest.get('https://www.reddit.com/r/subredditTest/comments/postIDtest.json', (req, res, ctx) => {
+
+		return res (
+			ctx.status(200),
+			ctx.json( [{}, {data: {children: [{kind:'test_kind', data: {link_id: 'link_id', id: 'testkey'}}] }}] )
 		)
 	})
 )

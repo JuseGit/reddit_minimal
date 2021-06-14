@@ -21,8 +21,15 @@ describe('components/subredditsList', () => {
 	});
 
 	it('renders a list of subreddits (@testing-library/react)', () => {
-		initialState.subreddits.subreddits = [{name:'sub1', subreddit: 'subreddit2'}];
-		const { getByRole } = render(<SubredditsList />, {initialState: initialState});
+		//initialState.subreddits.subreddits = [{name:'sub1', subreddit: 'subreddit2'}];
+		const localInit = {
+			...initialState,
+			subreddits: {
+				subreddits:  [{name:'sub1', subreddit: 'subreddit2'}]
+			}
+		}
+
+		const { getByRole } = render(<SubredditsList />, {initialState: localInit});
 
 		const subrList = getByRole( 'list' );
 		const { getAllByRole } = within(subrList);
