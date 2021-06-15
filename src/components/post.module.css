@@ -1,4 +1,5 @@
-.postWrapper {
+.postContainer {
+	display: flex;
 	margin-bottom: 2em;
 	border: 2px solid magenta;
 	border-radius: 5px;
@@ -7,11 +8,17 @@
 	padding: 1em;
 }
 
-.postWrapper:hover {
+.postContainer:hover {
 	box-shadow: 1px 8px 20px LightGrey;
 }
 
+.postWrapper {
+	width: 100%;
+	margin: 0 1em;
+}
+
 .postTopic {
+	border: 2px solid green;
 	margin-bottom: 2em;
 	font-weight: bold;
 }
@@ -29,6 +36,7 @@
 
 .postFooter {
 	display: flex;
+	width: 100%;
 	justify-content: space-between;
 	font-size: 14px;
 	border: 2px solid green;

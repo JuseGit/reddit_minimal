@@ -1,0 +1,9 @@
+.votes_counter_wrapper {
+	display: flex;
+	flex-direction: column;
+}
+
+.icon_button {
+	width: 24px;
+	height: 24px;
+}

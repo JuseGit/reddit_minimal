@@ -26,7 +26,7 @@ const PostsList = () => {
 		return posts.map((post) =>	<li key={post.name} className={styles.postWrapper} data-testid='postContent'>
 										<Post id={post.id} name={post.name} subreddit={subreddit} author={post.author}
 											  topic={post.title} n_comments={post.num_comments}
-											  time_frame={post.time_frame} img_url={post.img_url}
+											  time_frame={post.time_frame} img_url={post.img_url} votes={post.votes}
 										 />
 									</li>);
 	}

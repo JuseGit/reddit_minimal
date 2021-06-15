@@ -1,6 +1,6 @@
 import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
-import { getTimeDiff } from '../../lib/date_conversions.js'
+import { getTimeDiff, format_votes } from '../../lib/date_conversions.js'
 
 
 const subreddit1Posts = [
@@ -71,11 +71,12 @@ const postsSlice = createSlice({
 		[fetchPosts.fulfilled]: (state, action) => {
 			if( action.payload !== undefined ) {
 				action.payload.forEach((item, i) => {
-					const { id, name, title, author, created_utc, num_comments, post_hint, url } = item.data;
+					const { id, name, title, author, created_utc, num_comments, post_hint, url, score } = item.data;
 					const time_frame = getTimeDiff(created_utc);
 					const img_url = post_hint !== "image" ? undefined : url;
+					const votes = format_votes(score);
 
-					state.posts.push( {id, name, title, author, time_frame, num_comments, img_url} );
+					state.posts.push( {id, name, title, author, time_frame, num_comments, img_url, votes} );
 				});
 			}
 

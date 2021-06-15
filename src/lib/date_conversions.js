@@ -98,3 +98,28 @@ export const getPostedTime = (time_frame) => {
 
 	return posted;
 }
+
+
+export const format_votes = (n_votes) => {
+	let retVal = `${n_votes}`;
+	let sliced_str = "";
+	const format_str = n_votes.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
+
+	const sliceIndex = format_str.indexOf(".");
+
+	if( format_str[sliceIndex+1] !== "0" ) {
+		sliced_str = format_str.slice(0, sliceIndex+2);
+	} else {
+		sliced_str = format_str.slice(0, sliceIndex);
+	}
+
+	if( n_votes > 999 && n_votes < 1000000 ) {
+		retVal = `${sliced_str}k`;
+	} else if( n_votes >= 1000000 && n_votes < 1000000000 ) {
+		retVal = `${sliced_str}m`;
+	} else if( n_votes >= 1000000000 ) {
+		retVal = "a lot"
+	}
+
+	return retVal;
+}

@@ -6,9 +6,10 @@ import { LazyLoadImage } from 'react-lazy-load-image-component';
 import CommentsList from './commentsList.js';
 import { getPostedTime } from '../lib/date_conversions.js';
 import { fetchComments } from '../store/comments/commentsSlice.js';
+import VotesCounter from './votesCounter.js';
 
 
-const Post = ({ id, name, subreddit, author, topic, time_frame, n_comments, img_url }) => {
+const Post = ({ id, name, subreddit, author, topic, time_frame, n_comments, img_url, votes }) => {
 	const dispatch = useDispatch();
 	const [showCommentBox, setShowCommentBox] = useState(false);
 	let commentBoxStyle = showCommentBox ? {display: "block", visibility: "visible"} : {display: "none", visibility: "hidden"};
@@ -23,8 +24,9 @@ const Post = ({ id, name, subreddit, author, topic, time_frame, n_comments, img_
 	}, [dispatch, showCommentBox])
 
 	return (
-		<div className={styles.postWrapper}>
-			<article aria-label="user-post">
+		<div className={styles.postContainer}>
+			<VotesCounter n_votes={votes}/>
+			<article className={styles.postWrapper} aria-label="user-post">
 				<p className={styles.postTopic}> {topic} </p>
 				<div className={styles.postImgWrapper}>
 					{ img_url && <LazyLoadImage alt="post image alt" src={img_url} object-fit="cover"/> }
