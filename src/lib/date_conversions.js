@@ -102,6 +102,10 @@ export const getPostedTime = (time_frame) => {
 
 export const format_votes = (n_votes) => {
 	let retVal = `${n_votes}`;
+
+	if( !n_votes )
+		return "N/A";
+
 	let sliced_str = "";
 	const format_str = n_votes.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1.');
 
