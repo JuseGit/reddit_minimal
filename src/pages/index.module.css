@@ -4,7 +4,6 @@
 	grid-template-columns: repeat( 3, 1fr );
 	grid-gap: 15px;
 	background-color: #F8F8F8;
-	border: 2px solid green;
 }
 
 .cellItem {
@@ -12,18 +11,29 @@
 }
 
 .navWrapper {
+	display: flex;
+	align-items: center;
 	width: 100%;
 	height: 100px;
 	background-color: white;
 }
 
+.logo {
+	margin-left: 1em;
+}
+
+.logoText {
+	margin-left: 0.5em;
+	color: #3d5af1;
+	font-weight: bold;
+}
+
 .postsContainer {
-	height: 2000px;
 
 }
 
 .subredditContainer {
-	height: 1000px;
+
 
 }
 

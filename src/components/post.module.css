@@ -1,7 +1,6 @@
 .postContainer {
 	display: flex;
 	margin-bottom: 2em;
-	border: 2px solid magenta;
 	border-radius: 5px;
 	box-shadow: 1px 8px 10px LightGrey;
 	background-color: white;
@@ -18,7 +17,6 @@
 }
 
 .postTopic {
-	border: 2px solid green;
 	margin-bottom: 2em;
 	font-weight: bold;
 }
@@ -39,13 +37,11 @@
 	width: 100%;
 	justify-content: space-between;
 	font-size: 14px;
-	border: 2px solid green;
 }
 
 .commentBtnContainer {
 	display: flex;
 	justify-content: center;
-	border: 2px solid green;
 }
 
 .commentBoxBtn {

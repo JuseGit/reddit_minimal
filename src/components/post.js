@@ -35,15 +35,15 @@ const Post = ({ id, name, subreddit, author, topic, time_frame, n_comments, img_
 				</div>
 				<hr className={styles.footer_sep} />
 				<div className={styles.postFooter}>
-					<div style={{height:"100%", alignSelf:"center", border:"2px solid green"}}> {author} </div>
-					<div style={{alignSelf:"center", border:"2px solid green"}}> {posted_time} </div>
+					<div style={{ color:"#3d5af1", height:"100%", alignSelf:"center"}}> {author} </div>
+					<div style={{alignSelf:"center"}}> {posted_time} </div>
 					<div className={styles.commentBtnContainer} data-testid='show-comments-btn' onClick={() => setShowCommentBox(!showCommentBox)}>
 						<button className={shared.icon_button.concat(' ', styles.commentBoxBtn)} style={comment_btn_style}>
 							<svg className={shared.icon_svg} version="1.2" baseProfile="tiny" viewBox="0 0 22 22">
 								<path d="M18 7c.542 0 1 .458 1 1v7c0 .542-.458 1-1 1h-8.829l-.171.171v-.171h-3c-.542 0-1-.458-1-1v-7c0-.542.458-1 1-1h12m0-2h-12c-1.65 0-3 1.35-3 3v7c0 1.65 1.35 3 3 3h1v3l3-3h8c1.65 0 3-1.35 3-3v-7c0-1.65-1.35-3-3-3z"></path>
 							</svg>
 						</button>
-						<p style={{alignSelf:"center", border:"2px solid green"}}> {n_comments} </p>
+						<p style={{alignSelf:"center"}}> {n_comments} </p>
 					</div>
 				</div>
 

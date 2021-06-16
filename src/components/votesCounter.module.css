@@ -2,13 +2,11 @@
 	display: flex;
 	flex-direction: column;
 	align-items: center;
-	border: 2px solid green;
 	margin-right: 3px;
 }
 
 .votes_counter_btn {
 	border-radius: 8px;
-	border: 1px solid green;
 }
 
 .vote_cnt {

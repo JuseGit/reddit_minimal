@@ -13,10 +13,16 @@
 	stroke: currentColor;
 	fill: currentColor;
 	stroke-width: 0;
-	version: 1.2;
-	baseProfile: tiny;
-	viewBox: 0 0 24 24;
 	width: 1em;
 	height: 1em;
 	font-size: 1.5rem;
+}
+
+.icon_svg_nav {
+	stroke: #3d5af1;
+	fill: #3d5af1;
+	stroke-width: 0;
+	width: 1em;
+	height: 1em;
+	font-size: 2rem;
 }

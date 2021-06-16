@@ -1,15 +1,19 @@
 .sectionWrapper {
+	display: flex;
+	flex-direction: column;
 	background-color: white;
-	border: 2px solid white;
+
 }
 
 .listTitle {
+	align-self: flex-start;
 	margin: 1em;
+	font-size: 22px;
+	font-weight: bold;
 }
 
 .listContainer {
 	list-style-type: none;
-	border: 2px solid green;
 }
 
 .topicItem {
