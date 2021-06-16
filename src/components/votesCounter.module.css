@@ -1,9 +1,24 @@
 .votes_counter_wrapper {
 	display: flex;
 	flex-direction: column;
+	align-items: center;
+	border: 2px solid green;
+	margin-right: 3px;
 }
 
-.icon_button {
-	width: 24px;
-	height: 24px;
+.votes_counter_btn {
+	border-radius: 8px;
+	border: 1px solid green;
+}
+
+.vote_cnt {
+	margin-bottom: 0;
+}
+
+.up_vote:hover {
+	color: green;
+}
+
+.dw_vote:hover {
+	color: red;
 }

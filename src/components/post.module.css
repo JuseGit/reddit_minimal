@@ -42,10 +42,16 @@
 	border: 2px solid green;
 }
 
-.commentBoxBtn {
+.commentBtnContainer {
 	display: flex;
 	justify-content: center;
 	border: 2px solid green;
+}
+
+.commentBoxBtn {
+	align-self: center;
+	width: 30px;
+	height: 24px;
 }
 
 .commentBox {
