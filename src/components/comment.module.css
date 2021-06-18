@@ -1,1 +1,31 @@
+.comment {
+	background-color: #fcfcfc;
+	padding: 1em;
+	transition: box-shadow .1s ease-in;
+}
 
+.commentMeta {
+	display: flex;
+	justify-content: space-between;
+}
+
+.commentAuthor {
+	font-size: 16px;
+	font-weight: bold;
+	color: #3d5af1;
+}
+
+.commentTime {
+	font-size: 16px;
+	font-style: oblique;
+	color: #717171;
+}
+
+.commentBody {
+	color: #717171;
+	font-size: 17px;
+}
+
+.comment:hover {
+	box-shadow: 1px 8px 20px LightGrey;
+}

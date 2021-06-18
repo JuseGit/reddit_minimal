@@ -15,14 +15,3 @@
 .listContainer {
 	list-style-type: none;
 }
-
-.topicItem {
-	display: inline-flex;
-	width: 100%;
-	margin: 0;
-	padding: 1em;
-}
-
-.topicItem:hover {
-	background-color: WhiteSmoke;
-}

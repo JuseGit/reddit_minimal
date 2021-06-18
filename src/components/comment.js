@@ -5,11 +5,18 @@ import ReactMarkdown from 'react-markdown';
 
 const Comment = ({ user, text, created_time }) => {
 	return (
-		<div role="user-comment">
-			<p>{user ? user : "missing user"}</p>
-			<p>{created_time ? created_time : "missing creation time"}</p>
-			{text && <ReactMarkdown children={text}/>}
-		</div>
+		<>
+			<div className={styles.comment}>
+				<div className={styles.commentMeta} role="user-comment">
+					<p className={styles.commentAuthor}>{user ? user : "missing user"}</p>
+					<p className={styles.commentTime}>{created_time ? created_time : "missing creation time"}</p>
+				</div>
+
+				<div className={styles.commentBody}>
+					{text && <ReactMarkdown children={text}/>}
+				</div>
+			</div>
+		</>
 	);
 }
 

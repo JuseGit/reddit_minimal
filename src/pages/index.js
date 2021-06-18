@@ -10,14 +10,6 @@ import SubredditsList from '../components/subredditsList'
 import PostsList from '../components/postsList'
 
 
-{/* <StaticImage
-  src="../images/gatsby-astronaut.png"
-  width={300}
-  quality={95}
-  formats={["AUTO", "WEBP", "AVIF"]}
-  alt="A Gatsby astronaut"
-  style={{ marginBottom: `1.45rem` }}
-/> */}
 
 const IndexPage = () => (
   <Layout>

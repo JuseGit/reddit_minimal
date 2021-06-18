@@ -5,6 +5,7 @@
 	box-shadow: 1px 8px 10px LightGrey;
 	background-color: white;
 	padding: 1em;
+	transition: box-shadow .1s ease-in;
 }
 
 .postContainer:hover {
@@ -29,6 +30,7 @@
 .footer_sep {
 	width: 100%;
 	color: grey;
+	margin-top: 1em;
 	margin-bottom: 0;
 }
 

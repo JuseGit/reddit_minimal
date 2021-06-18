@@ -5,7 +5,7 @@ import axios from 'axios';
 export const fetchSubreddits = createAsyncThunk (
 	'subreddits/fetchSubreddits',
 	async () => {
-		const response = await axios.get('https://www.reddit.com/best.json?limit=10&t=year');
+		const response = await axios.get('https://www.reddit.com/subreddits.json?limit=10&t=year');
 		//console.log(response.data.data);
 
 		// This is the array with subreddits data.
@@ -41,11 +41,11 @@ const subredditsSlice = createSlice({
 			if( action.payload !== undefined ) {
 				state.subreddits = [];
 				action.payload.forEach((item, i) => {
-					const { name, subreddit } = item.data;
+					const { name, display_name, icon_img } = item.data;
 					if(i === 0) {
-						state.currentSubreddit = subreddit;
+						state.currentSubreddit = display_name;
 					}
-					state.subreddits.push({ name, subreddit });
+					state.subreddits.push({ name, display_name, icon_img });
 				});
 			}
 

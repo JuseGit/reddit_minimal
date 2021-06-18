@@ -3,7 +3,7 @@ import { setupServer } from 'msw/node';
 
 
 const server = setupServer (
-	rest.get('https://www.reddit.com/best.json', (req, res, ctx) => {
+	rest.get('https://www.reddit.com/subreddits.json', (req, res, ctx) => {
 		const query = req.url.searchParams;
 		const limit = query.get("limit");
 		const t = query.get("t");
