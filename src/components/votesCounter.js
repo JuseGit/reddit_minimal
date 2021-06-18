@@ -14,8 +14,8 @@ const VotesCounter = ( {n_votes} ) => {
 	const [dw_vote, setDwVote] = useState(false);
 
 	// Set the path and the color for the vote buttons, depending on which one is clicked
-	const up_vote_btn_class = shared.icon_button.concat(' ', styles.votes_counter_btn).concat(' ', styles.up_vote);
-	const dw_vote_btn_class = shared.icon_button.concat(' ', styles.votes_counter_btn).concat(' ', styles.dw_vote);
+	const up_vote_btn_class = shared.icon_button + " " + styles.votes_counter_btn + " " + styles.up_vote;
+	const dw_vote_btn_class = shared.icon_button + " " + styles.votes_counter_btn + " " + styles.dw_vote;
 
 	const up_vote_path = up_vote ? upvote_full : upvote_empty;
 	const dw_vote_path = dw_vote ? dwvote_full : dwvote_empty;

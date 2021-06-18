@@ -9,7 +9,11 @@ const Subreddit = ( { name, icon_url } ) => {
 	const [selected, setSelected] = useState(false);
 	const dispatch = useDispatch();
 	const curSubreddit = useSelector(selectCurrentSubreddit);
-	const wrapperClass = selected ? styles.topicItem.concat(' ', styles.selected) : styles.topicItem;
+
+	// NOTE: For Jest styles is undefined, the module should be called like import styles from ...
+	// NOTE: but that way gatsby gives a warning. 
+	//const wrapperClass = selected ? styles.topic_item.concat(' ', styles.selected) : styles.topic_item;
+	const wrapperClass = selected ? styles.topic_item + " " + styles.selected : styles.topic_item;
 
 
 	useEffect( () => {

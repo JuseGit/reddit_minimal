@@ -1,7 +1,6 @@
 import React from 'react';
 import { render, screen, fireEvent, within, waitFor } from '../../test-utils.js';
 import * as ReactReduxHooks from 'react-redux';
-
 import SubredditsList from '../subredditsList.js';
 
 
