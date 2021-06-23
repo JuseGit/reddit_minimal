@@ -1,4 +1,5 @@
 .comment {
+	width: 100%;
 	background-color: #fcfcfc;
 	padding: 1em;
 	transition: box-shadow .1s ease-in;

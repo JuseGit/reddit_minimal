@@ -47,7 +47,7 @@ const postsSlice = createSlice({
 
 	initialState: {
 		posts: [],
-		isLoadingPosts: false,
+		hasLoadedPosts: false,
 		hasError: false
 	},
 
@@ -65,7 +65,7 @@ const postsSlice = createSlice({
 	extraReducers: {
 		[fetchPosts.pending]: (state, action) => {
 			state.posts = [];
-			state.isLoadingPosts = true;
+			state.hasLoadedPosts = false;
 			state.hasError = false;
 		},
 		[fetchPosts.fulfilled]: (state, action) => {
@@ -80,11 +80,11 @@ const postsSlice = createSlice({
 				});
 			}
 
-			state.isLoadingPosts = false;
+			state.hasLoadedPosts = true;
 			state.hasError = false;
 		},
 		[fetchPosts.rejected]: (state, action) => {
-			state.isLoadingPosts = false;
+			state.hasLoadedPosts = false;
 			state.hasError = true;
 		}
 	}
@@ -92,5 +92,6 @@ const postsSlice = createSlice({
 
 export const { updatePosts } = postsSlice.actions;
 export const selectPosts = (state) => state.posts.posts;
+export const selectHasLoadedPosts = (state) => state.posts.hasLoadedPosts;
 
 export default postsSlice.reducer;

@@ -12,7 +12,7 @@ describe ( 'store/comments/commentsSlice', () => {
 			//expect(postsReducer(undefined, {})).toEqual(emptyState);
 			const emptyState = {
 				comments: {},
-				isLoadingComments: false,
+				hasLoadedComments: false,
 				hasError: false
 			}
 

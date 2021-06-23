@@ -20,13 +20,13 @@ const commentsSlice = createSlice({
 
 	initialState: {
 		comments: {},
-		isLoadingComments: false,
+		hasLoadedComments: false,
 		hasError: false
 	},
 
 	extraReducers: {
 		[fetchComments.pending]: (state, action) => {
-			state.isLoadingComments = true;
+			state.hasLoadedComments = false;
 			state.hasError = false;
 		},
 		[fetchComments.fulfilled]: (state, action) => {
@@ -45,16 +45,17 @@ const commentsSlice = createSlice({
 				});
 			}
 
-			state.isLoadingComments = false;
+			state.hasLoadedComments = true;
 			state.hasError = false;
 		},
 		[fetchComments.rejected]: (state, action) => {
-			state.isLoadingComments = false;
+			state.hasLoadedComments = false;
 			state.hasError = true;
 		}
 	}
 });
 
 export const selectComments = (state) => state.comments.comments;
+export const selectHasLoadedComments = (state) => state.comments.hasLoadedComments;
 
 export default commentsSlice.reducer;

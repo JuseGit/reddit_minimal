@@ -12,14 +12,22 @@ describe('components/postsList', () => {
 		},
 		posts: {
 			posts: [],
-			isLoadingPosts: false,
+			hasLoadedPosts: false,
 			hasError: false
 		}
 	}
 
 
 	it('renders an empty list if no post available (@testing-library/react)', () => {
-		const { getByRole } = render(<PostsList />, {initialState: initialState});
+		const localInit = {
+			...initialState,
+			posts: {
+				posts: [],
+				hasLoadedPosts: true
+			}
+		}
+
+		const { getByRole } = render(<PostsList />, {initialState: localInit});
 
 		const postsList = getByRole('list');
 

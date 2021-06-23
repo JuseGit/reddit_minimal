@@ -15,6 +15,7 @@
 
 .up_vote:hover {
 	color: green;
+	align-self: center;
 }
 
 .dw_vote:hover {

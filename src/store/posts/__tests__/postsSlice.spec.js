@@ -3,11 +3,9 @@ import { Reducer, Selector } from 'redux-testkit';
 
 
 const initialState = {
-
-		posts: [],
-		isLoadingPosts: false,
-		hasError: false
-
+	posts: [],
+	hasLoadedPosts: false,
+	hasError: false
 }
 
 describe('store/posts/postsSlice', () => {

@@ -24,7 +24,14 @@
 
 .postImgWrapper {
 	display: flex;
+	align-items: center;
 	justify-content: center;
+}
+
+.postAuthor {
+	font-weight: bold;
+	color: #3d5af1;
+	height: 100%;
 }
 
 .footer_sep {
@@ -37,6 +44,7 @@
 .postFooter {
 	display: flex;
 	width: 100%;
+	align-items: center;
 	justify-content: space-between;
 	font-size: 14px;
 }
@@ -44,10 +52,10 @@
 .commentBtnContainer {
 	display: flex;
 	justify-content: center;
+	align-items: center;
 }
 
 .commentBoxBtn {
-	align-self: center;
 	width: 30px;
 	height: 24px;
 }
