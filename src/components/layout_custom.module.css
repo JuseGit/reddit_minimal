@@ -18,3 +18,9 @@
 		grid-column: span 1;
 	}
 }
+
+@media screen and (max-width: 959px) {
+	.cellItem:nth-child(3) {
+		grid-row-start: 2;
+	}
+}

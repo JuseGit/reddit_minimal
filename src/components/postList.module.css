@@ -9,3 +9,9 @@
 .postWrapper {
 	margin-bottom: 30px;
 }
+
+@media screen and (max-width: 959px) {
+	.listContainer {
+		margin: 0 auto;
+	}
+}
