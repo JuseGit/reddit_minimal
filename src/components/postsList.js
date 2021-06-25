@@ -52,6 +52,7 @@ const PostsList = () => {
 		}
 
 		let filteredPosts = posts;
+		// If a search word has been submitted, filter the result.
 		if( searchText !== undefined && searchText !== "" ) {
 			filteredPosts = posts.filter(post => post.title.toLowerCase().includes(searchText.toLowerCase()));
 		}
