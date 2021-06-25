@@ -48,7 +48,8 @@ const postsSlice = createSlice({
 	initialState: {
 		posts: [],
 		hasLoadedPosts: false,
-		hasError: false
+		hasError: false,
+		searchText: ""
 	},
 
 	reducers: {
@@ -58,6 +59,13 @@ const postsSlice = createSlice({
 				state.posts = subreddit2Posts;
 			} else {
 				state.posts = subreddit1Posts;
+			}
+		},
+
+		setSearchText: (state, action) => {
+			// NOTE: might need to reset the word
+			if( action.payload !== undefined ) {
+				state.searchText = action.payload;
 			}
 		}
 	},
@@ -90,8 +98,9 @@ const postsSlice = createSlice({
 	}
 });
 
-export const { updatePosts } = postsSlice.actions;
+export const { updatePosts, setSearchText } = postsSlice.actions;
 export const selectPosts = (state) => state.posts.posts;
 export const selectHasLoadedPosts = (state) => state.posts.hasLoadedPosts;
+export const selectSearchText = (state) => state.posts.searchText;
 
 export default postsSlice.reducer;

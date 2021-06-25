@@ -1,11 +1,12 @@
-import { default as postsReducer, selectPosts, updatePosts } from '../postsSlice.js';
+import { default as postsReducer, selectPosts, updatePosts, setSearchText } from '../postsSlice.js';
 import { Reducer, Selector } from 'redux-testkit';
 
 
 const initialState = {
 	posts: [],
 	hasLoadedPosts: false,
-	hasError: false
+	hasError: false,
+	searchText: ""
 }
 
 describe('store/posts/postsSlice', () => {
@@ -16,6 +17,13 @@ describe('store/posts/postsSlice', () => {
 			};
 
 			expect(updatePosts()).toEqual(exp_action);
+		});
+		it('should create an action to set the search word text', () => {
+			const exp_action = {
+				type: 'posts/setSearchText'
+			};
+
+			expect(setSearchText()).toEqual(exp_action);
 		});
 	});
 

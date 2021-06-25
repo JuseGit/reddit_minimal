@@ -4,7 +4,7 @@ import { selectPosts, fetchPosts } from '../store/posts/postsSlice.js';
 import { selectCurrentSubreddit } from '../store/subreddits/subredditsSlice.js';
 import * as styles from './postList.module.css'
 import Post from './post.js'
-import { selectHasLoadedPosts } from '../store/posts/postsSlice.js';
+import { selectHasLoadedPosts, selectSearchText } from '../store/posts/postsSlice.js';
 
 
 
@@ -16,6 +16,7 @@ const PostsList = () => {
 	const posts = useSelector(selectPosts);
 	const hasLoaded = useSelector(selectHasLoadedPosts);
 	const subreddit = useSelector(selectCurrentSubreddit);
+	const searchText = useSelector(selectSearchText);
 
 
 	useEffect( () => {
@@ -50,12 +51,19 @@ const PostsList = () => {
 			return "No posts available."
 		}
 
-		return posts.map((post) =>	<li key={post.name} className={styles.postWrapper} data-testid='postContent'>
-										<Post id={post.id} name={post.name} subreddit={subreddit} author={post.author}
-											  topic={post.title} n_comments={post.num_comments}
-											  time_frame={post.time_frame} img_url={post.img_url} votes={post.votes}
-										 />
-									</li>);
+		let filteredPosts = posts;
+		if( searchText !== undefined && searchText !== "" ) {
+			filteredPosts = posts.filter(post => post.title.toLowerCase().includes(searchText.toLowerCase()));
+		}
+
+		return filteredPosts.map (
+			(post) => <li key={post.name} className={styles.postWrapper} data-testid='postContent'>
+						<Post id={post.id} name={post.name} subreddit={subreddit} author={post.author}
+							  topic={post.title} n_comments={post.num_comments}
+							  time_frame={post.time_frame} img_url={post.img_url} votes={post.votes}
+						 />
+					  </li>
+		);
 	}
 
 	return (
