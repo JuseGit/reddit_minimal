@@ -25,7 +25,6 @@ const SubredditsList = () => {
 	const handleClick = () => {
 		// The media query handles if the section can be clicked.
 		// This is for mobile only.
-		console.log("we")
 		setShowList(!showList);
 	}
 
