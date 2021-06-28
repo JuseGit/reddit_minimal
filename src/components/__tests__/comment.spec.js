@@ -25,7 +25,7 @@ describe('components/comment', () => {
 		const commentContentExp = new RegExp(regEx, "g");
 
 		render ( <Comment user={commentProps.user} text={commentProps.text} created_time={commentProps.created_time} />, {initialState: {comments:{hasLoadedComments:true}}});
-		const commentElement = screen.getByRole("user-comment");
+		const commentElement = screen.getByLabelText("user-comment");
 
 		expect(commentElement).toHaveTextContent(commentContentExp);
 	});

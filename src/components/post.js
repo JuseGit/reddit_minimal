@@ -2,7 +2,6 @@ import React, { useState, useEffect } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import * as styles from './post.module.css';
 import * as shared from './sharedStyles.module.css';
-import { StaticImage } from 'gatsby-plugin-image';
 import { LazyLoadImage } from 'react-lazy-load-image-component';
 import CommentsList from './commentsList.js';
 import { getPostedTime } from '../lib/date_conversions.js';
@@ -60,7 +59,7 @@ const Post = ({ id, name, subreddit, author, topic, time_frame, n_comments, img_
 			const postID = id;
 			dispatch( fetchComments({postID, subreddit}) );
 		}
-	}, [dispatch, showCommentBox])
+	}, [dispatch, showCommentBox, id, subreddit])
 
 	return (
 		<div className={ hasLoaded ? styles.postContainer : styles.postContainer + " " + shared.loading}>

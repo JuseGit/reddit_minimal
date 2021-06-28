@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { useSelector } from 'react-redux';
 import * as styles from './comment.module.css'
 import ReactMarkdown from 'react-markdown';
@@ -22,7 +22,7 @@ const Comment = ({ user, text, created_time }) => {
 	return (
 		<>
 			{ !hasLoaded ? dummy_comment :
-				<div className={styles.comment} role="user-comment">
+				<div className={styles.comment} aria-label="user-comment">
 					<div className={styles.commentMeta}>
 						<p className={styles.commentAuthor}>{user ? user : "missing user"}</p>
 						<p className={styles.commentTime}>{created_time ? created_time : "missing creation time"}</p>

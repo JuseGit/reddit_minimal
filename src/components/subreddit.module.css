@@ -1,5 +1,8 @@
 .topic_item {
-	margin-right: 1em;
+	width: 98%;
+	margin-right: 2em;
+	border-style: none;
+	background: none;
 }
 
 .topicTitle {

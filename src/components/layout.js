@@ -7,9 +7,6 @@
 
 import * as React from "react";
 import PropTypes from "prop-types";
-import { useStaticQuery, graphql } from "gatsby";
-
-import Header from "./header";
 import "./layout.css";
 import * as styles from "./layout_custom.module.css"
 
@@ -25,35 +22,25 @@ import * as styles from "./layout_custom.module.css"
  * @return 			The newly arranged page.
  */
 const Layout = ({ children, header, main, aside }) => {
-	const data = useStaticQuery(graphql`
-		query SiteTitleQuery {
-			site {
-				siteMetadata {
-					title
-				}
-			}
-		}
-		`)
-		// <Header siteTitle={data.site.siteMetadata?.title || `Title`} />
-		return (
-			<>
-			{children}
-			<div className={styles.container}>
-				<header className={styles.cellItem}>
-					{header}
-				</header>
+	return (
+		<>
+		{children}
+		<div className={styles.container}>
+			<header className={styles.cellItem}>
+				{header}
+			</header>
 
-				<main className={styles.cellItem}>
-					{main}
-				</main>
+			<main className={styles.cellItem}>
+				{main}
+			</main>
 
-				<aside className={styles.cellItem}>
-					{aside}
-				</aside>
-			</div>
-			</>
-		)
-	}
+			<aside className={styles.cellItem}>
+				{aside}
+			</aside>
+		</div>
+		</>
+	)
+}
 
 Layout.propTypes = {
   children: PropTypes.node.isRequired,

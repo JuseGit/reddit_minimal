@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
-import { StaticImage } from 'gatsby-plugin-image';
 import { useSelector, useDispatch } from 'react-redux';
-import { selectSubreddits, fetchSubreddits, updateCurSubreddit } from '../store/subreddits/subredditsSlice.js';
+import { selectSubreddits, fetchSubreddits } from '../store/subreddits/subredditsSlice.js';
 import * as styles from './subredditsList.module.css';
 import Subreddit from './subreddit.js';
 
@@ -41,11 +40,11 @@ const SubredditsList = () => {
 	}
 
 	return (
-		<section className={styles.sectionWrapper} onClick={handleClick}>
-			<div className={styles.listHeader}>
+		<section className={styles.sectionWrapper}>
+			<button className={styles.listHeader} onClick={handleClick}>
 				<p className={styles.listTitle}>Subreddits</p>
 				<span className={styles.listArrow}>&#9660;</span>
-			</div>
+			</button>
 			<ul className={listView}>
 				{mapSubr(subreddits)}
 			</ul>

@@ -11,7 +11,7 @@ const Subreddit = ( { name, icon_url } ) => {
 	const curSubreddit = useSelector(selectCurrentSubreddit);
 
 	// NOTE: For Jest styles is undefined, the module should be called like import styles from ...
-	// NOTE: but that way gatsby gives a warning. 
+	// NOTE: but that way gatsby gives a warning.
 	//const wrapperClass = selected ? styles.topic_item.concat(' ', styles.selected) : styles.topic_item;
 	const wrapperClass = selected ? styles.topic_item + " " + styles.selected : styles.topic_item;
 
@@ -22,23 +22,21 @@ const Subreddit = ( { name, icon_url } ) => {
 		} else {
 			setSelected(true);
 		}
-	}, [curSubreddit])
+	}, [name, curSubreddit])
 
 	const handleOnClick = (subrName) => {
 		dispatch(updateCurSubreddit(subrName));
 	}
 
 	return (
-		<>
-		<div className={wrapperClass} onClick={() => handleOnClick(name)}>
-			<button className={styles.button_wrapper}>
+		<div className={wrapperClass}>
+			<button className={styles.button_wrapper} onClick={() => handleOnClick(name)} onKeyDown={() => handleOnClick(name)}>
 				<div className={styles.iconWrapper}>
 					{icon_url && <LazyLoadImage alt="subreddit image alt" src={icon_url} object-fit="cover" width="30px" style={{borderRadius:"20px"}}/>}
 				</div>
 				<p className={styles.topicTitle}>{name}</p>
 			</button>
 		</div>
-		</>
 	)
 }
 

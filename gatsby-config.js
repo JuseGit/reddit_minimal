@@ -1,8 +1,8 @@
 module.exports = {
   siteMetadata: {
-    title: `Gatsby Default Starter`,
-    description: `Kick off your next, great Gatsby project with this default starter. This barebones starter ships with the main Gatsby configuration files you might need.`,
-    author: `@gatsbyjs`,
+    title: `Reddit Client`,
+    description: `This application simulates some basic functionalities of Reddit. Uses JSON API to obtain read-only data.`,
+    author: `@jusefm`,
   },
   plugins: [
     `gatsby-plugin-react-helmet`,
