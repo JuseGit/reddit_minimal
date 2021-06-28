@@ -2,7 +2,17 @@
 	display: flex;
 	flex-direction: column;
 	background-color: white;
+}
 
+.listHeader {
+	display: flex;
+	justify-content: space-between;
+	align-items: center;
+}
+
+.listArrow {
+	display: none;
+	margin-right: 1em;
 }
 
 .listTitle {
@@ -13,5 +23,25 @@
 }
 
 .listContainer {
+	display: block;
 	list-style-type: none;
+}
+
+.show {
+	display: block !important;
+}
+
+@media screen and ( max-width: 959px ) {
+	.sectionWrapper {
+		box-shadow: 1px 8px 10px LightGrey;
+		cursor: pointer;
+	}
+
+	.listArrow {
+		display: block;
+	}
+
+	.listContainer {
+		display: none;
+	}
 }
