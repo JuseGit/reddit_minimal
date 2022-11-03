@@ -24,13 +24,13 @@ const Subreddit = ( { name, icon_url } ) => {
 		}
 	}, [name, curSubreddit])
 
-	const handleOnClick = (subrName) => {
-		dispatch(updateCurSubreddit(subrName));
+	const handleOnClick = () => {
+		dispatch(updateCurSubreddit(name));
 	}
 
 	return (
 		<div className={wrapperClass}>
-			<button className={styles.button_wrapper} onClick={() => handleOnClick(name)} onKeyDown={() => handleOnClick(name)}>
+			<button className={styles.button_wrapper} onClick={handleOnClick} onKeyDown={handleOnClick}>
 				<div className={styles.iconWrapper}>
 					{icon_url && <LazyLoadImage alt="subreddit image alt" src={icon_url} object-fit="cover" width="30px" style={{borderRadius:"20px"}}/>}
 				</div>

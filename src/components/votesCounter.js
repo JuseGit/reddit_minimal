@@ -36,13 +36,13 @@ const VotesCounter = ( {children} ) => {
 
 	return (
 		<div className={styles.votes_counter_wrapper}>
-			<button className={up_vote_btn_class} onClick={() => handleUpVoteClick()} style={up_vote_btn_style}>
+			<button className={up_vote_btn_class} onClick={handleUpVoteClick} style={up_vote_btn_style}>
 				<svg className={shared.icon_svg} version="1.2" baseProfile="tiny" viewBox="0 0 24 24">
 					<path d={up_vote_path}></path>
 				</svg>
 			</button>
 			<span className={styles.vote_cnt} style={vote_style}>{children}</span>
-			<button className={dw_vote_btn_class} onClick={() => handleDwVoteClick()} style={dw_vote_btn_style}>
+			<button className={dw_vote_btn_class} onClick={handleDwVoteClick} style={dw_vote_btn_style}>
 				<svg className={shared.icon_svg} version="1.2" baseProfile="tiny" viewBox="0 0 24 24">
 					<path d={dw_vote_path}></path>
 				</svg>
