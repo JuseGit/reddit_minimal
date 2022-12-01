@@ -1,8 +1,8 @@
-import React from 'react';
-import { useSelector } from 'react-redux';
+import React from 'react'
+import { useSelector } from 'react-redux'
 import * as styles from './comment.module.css'
-import ReactMarkdown from 'react-markdown';
-import { selectHasLoadedComments } from '../store/comments/commentsSlice.js';
+import ReactMarkdown from 'react-markdown'
+import { selectHasLoadedComments } from '../store/comments/commentsSlice.js'
 import * as shared from './sharedStyles.module.css'
 
 
