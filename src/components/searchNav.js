@@ -1,27 +1,24 @@
-import React, { useState } from "react";
-import * as styles from "./searchNav.module.css";
-import * as shared from "./sharedStyles.module.css";
-import { useDispatch } from "react-redux";
-import { setSearchText } from "../store/posts/postsSlice.js";
-
+import React, { useState } from "react"
+import * as styles from "./searchNav.module.css"
+import * as shared from "./sharedStyles.module.css"
 
 
 /**
  * 	SearchNav - Renders the navigation bar with search function.
  */
-const SearchNav = () => {
-	const dispatch = useDispatch();
-	const [searchInput, setSearchInput] = useState("");
-	const svg_style = shared.icon_svg_nav + " " + styles.logo;
+const SearchNav = ({initialInput, updateSeachText}) => {
+	const [searchInput, setSearchInput] = useState(initialInput)
+	const svg_style = shared.icon_svg_nav + " " + styles.logo
 
-	function handleChange(e) {
-	  	e.preventDefault();
-		setSearchInput(e.target.value);
+
+	const handleChange = (e) => {
+	  	e.preventDefault()
+		setSearchInput(e.target.value)
 	}
 
-	function handleSubmit(e) {
-	  	e.preventDefault();
-		dispatch(setSearchText(searchInput));
+	const handleSubmit = (e) => {
+	  	e.preventDefault()
+		updateSeachText(searchInput)
 	}
 
 	return (

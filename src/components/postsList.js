@@ -1,67 +1,49 @@
-import React, { useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { selectPosts, fetchPosts } from '../store/posts/postsSlice.js';
-import { selectCurrentSubreddit } from '../store/subreddits/subredditsSlice.js';
+import React from 'react'
 import * as styles from './postList.module.css'
 import Post from './post.js'
-import { selectHasLoadedPosts, selectSearchText } from '../store/posts/postsSlice.js';
-
+import { getTimeDiff, format_votes } from '../lib/date_conversions'
+import { useGetPostsQuery } from '../store/services/api'
 
 
 /**
  *	Renders a list of posts relative to a specific subreddit.
  */
-const PostsList = () => {
-	const dispatch = useDispatch();
-	const posts = useSelector(selectPosts);
-	const hasLoaded = useSelector(selectHasLoadedPosts);
-	const subreddit = useSelector(selectCurrentSubreddit);
-	const searchText = useSelector(selectSearchText);
-
-
-	useEffect( () => {
-		if( subreddit !== undefined ) {
-			dispatch(fetchPosts(subreddit));
-		}
-	}, [dispatch, subreddit]);
+const PostsList = ({subreddit, filterText}) => {
+	const { data: posts, error, isLoading } = useGetPostsQuery(subreddit)
 
 	// maps posts as list items, using the data available after the fetching procecss.
 	const mapPosts = (posts) => {
-		if( posts === undefined ) {
-			return "Can't load posts!";
-		}
+		if( error ) return "Can't load posts."
 
-		if( !hasLoaded ) {
+		if( isLoading ) {
 			// if no posts are available yet, render a list of fake posts.
-			let dummy_list = [];
-			let dummy_item = undefined;
+			let dummy_list = []
+			let dummy_item = undefined
 
 			for ( let i=0; i < 5; i++ ) {
 				dummy_item = <li key={`dummy_post_${i}`} className={styles.postWrapper} data-testid='postContent'>
-								<Post />
-							 </li>;
+								<Post isLoading={isLoading}/>
+							 </li>
 
-				dummy_list.push(dummy_item);
+				dummy_list.push(dummy_item)
 			}
 
-			return dummy_list;
+			return dummy_list
 		}
 
 		if( posts.length === 0 ) {
 			return "No posts available."
 		}
 
-		let filteredPosts = posts;
-		// If a search word has been submitted, filter the result.
-		if( searchText !== undefined && searchText !== "" ) {
-			filteredPosts = posts.filter(post => post.title.toLowerCase().includes(searchText.toLowerCase()));
-		}
+		const filteredPosts = filterText !== "" ? posts.filter(post => post.data.title.toLowerCase().includes(filterText.toLowerCase())) : posts
 
 		return filteredPosts.map (
-			(post) => <li key={post.name} className={styles.postWrapper} data-testid='postContent'>
-						<Post id={post.id} name={post.name} subreddit={subreddit} author={post.author}
-							  topic={post.title} n_comments={post.num_comments}
-							  time_frame={post.time_frame} img_url={post.img_url} votes={post.votes}
+			(post) => <li key={post.data.name} className={styles.postWrapper} data-testid='postContent'>
+						<Post isLoading={isLoading} id={post.data.id} name={post.data.name} subreddit={subreddit} author={post.data.author}
+							topic={post.data.title} n_comments={post.data.num_comments}
+							time_frame={getTimeDiff(post.data.created_utc)}
+							img_url={post.data.post_hint !== "image" ? undefined : post.data.url}
+							votes={format_votes(post.data.score)}
 						 />
 					  </li>
 		);
@@ -76,4 +58,4 @@ const PostsList = () => {
 	);
 }
 
-export default PostsList;
+export default PostsList

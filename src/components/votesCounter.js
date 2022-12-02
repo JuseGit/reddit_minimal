@@ -1,6 +1,6 @@
-import React, { useState } from 'react';
-import * as styles from './votesCounter.module.css';
-import * as shared from './sharedStyles.module.css';
+import React, { useState } from 'react'
+import * as styles from './votesCounter.module.css'
+import * as shared from './sharedStyles.module.css'
 
 
 
@@ -14,24 +14,24 @@ const VotesCounter = ( {children} ) => {
 	const [dw_vote, setDwVote] = useState(false);
 
 	// Set the path and the color for the vote buttons, depending on which one is clicked
-	const up_vote_btn_class = shared.icon_button + " " + styles.votes_counter_btn + " " + styles.up_vote;
-	const dw_vote_btn_class = shared.icon_button + " " + styles.votes_counter_btn + " " + styles.dw_vote;
+	const up_vote_btn_class = shared.icon_button + " " + styles.votes_counter_btn + " " + styles.up_vote
+	const dw_vote_btn_class = shared.icon_button + " " + styles.votes_counter_btn + " " + styles.dw_vote
 
-	const up_vote_path = up_vote ? upvote_full : upvote_empty;
-	const dw_vote_path = dw_vote ? dwvote_full : dwvote_empty;
+	const up_vote_path = up_vote ? upvote_full : upvote_empty
+	const dw_vote_path = dw_vote ? dwvote_full : dwvote_empty
 
-	const up_vote_btn_style = up_vote ? { color: "green" } : {color: "initial"};
-	const dw_vote_btn_style = dw_vote ? { color: "red" } : {color: "initial"};
-	const vote_style = up_vote ? { color: "green" } : dw_vote ? { color: "red" } : { color: "initial" };
+	const up_vote_btn_style = up_vote ? { color: "green" } : {color: "initial"}
+	const dw_vote_btn_style = dw_vote ? { color: "red" } : {color: "initial"}
+	const vote_style = up_vote ? { color: "green" } : dw_vote ? { color: "red" } : { color: "initial" }
 
 	const handleUpVoteClick = () => {
-		setUpVote(!up_vote);
-		setDwVote(false);
+		setUpVote(!up_vote)
+		setDwVote(false)
 	}
 
 	const handleDwVoteClick = () => {
-		setDwVote(!dw_vote);
-		setUpVote(false);
+		setDwVote(!dw_vote)
+		setUpVote(false)
 	}
 
 	return (

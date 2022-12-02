@@ -1,14 +1,11 @@
-import React, { useState, useEffect } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import * as styles from './post.module.css';
-import * as shared from './sharedStyles.module.css';
-import { LazyLoadImage } from 'react-lazy-load-image-component';
-import CommentsList from './commentsList.js';
-import { getPostedTime } from '../lib/date_conversions.js';
-import { fetchComments } from '../store/comments/commentsSlice.js';
-import VotesCounter from './votesCounter.js';
-import { selectHasLoadedPosts } from '../store/posts/postsSlice.js';
-
+import React, { useState } from 'react'
+import * as styles from './post.module.css'
+import * as shared from './sharedStyles.module.css'
+import { LazyLoadImage } from 'react-lazy-load-image-component'
+import CommentsList from './commentsList'
+import { getPostedTime } from '../lib/date_conversions'
+import VotesCounter from './votesCounter'
+import { useGetCommentsQuery } from '../store/services/api'
 
 
 /**
@@ -40,31 +37,23 @@ const post_placeholder = ( button ) => {
 /**
  * 	Post component. Renders a link in a subreddit.
  */
-const Post = ({ id, name, subreddit, author, topic, time_frame, n_comments, img_url, votes }) => {
-	const dispatch = useDispatch();
-	const hasLoaded = useSelector(selectHasLoadedPosts);
-	const [showCommentBox, setShowCommentBox] = useState(false);
-	let commentBoxStyle = showCommentBox ? {display: "block", visibility: "visible"} : {display: "none", visibility: "hidden"};
-	const posted_time = time_frame ? getPostedTime(time_frame) : " ";
-	const comment_btn_style = showCommentBox ? { color: "blue" } : { color: "initial" };
-	const comment_btn_class = shared.icon_button + " " + styles.commentBoxBtn;
-	const comment_btn = <button className={comment_btn_class} style={comment_btn_style} onClick={() => setShowCommentBox(!showCommentBox)}>
+const Post = ({ isLoading, id, name, subreddit, author, topic, time_frame, n_comments, img_url, votes }) => {
+	const [skip, setSkip] = useState(true)
+	const { data: comments, error, isLoading: isLoadingCom } = useGetCommentsQuery({id, subreddit}, {skip})
+	let commentBoxStyle = !skip ? {display: "block", visibility: "visible"} : {display: "none", visibility: "hidden"}
+	const posted_time = time_frame ? getPostedTime(time_frame) : " "
+	const comment_btn_style = !skip ? { color: "blue" } : { color: "initial" }
+	const comment_btn_class = shared.icon_button + " " + styles.commentBoxBtn
+	const comment_btn = <button className={comment_btn_class} style={comment_btn_style} onClick={() => setSkip((prev) => !prev)} data-testid='show-comments-btn'>
 							<svg className={shared.icon_svg} version="1.2" baseProfile="tiny" viewBox="0 0 22 22">
 		 						<path d="M18 7c.542 0 1 .458 1 1v7c0 .542-.458 1-1 1h-8.829l-.171.171v-.171h-3c-.542 0-1-.458-1-1v-7c0-.542.458-1 1-1h12m0-2h-12c-1.65 0-3 1.35-3 3v7c0 1.65 1.35 3 3 3h1v3l3-3h8c1.65 0 3-1.35 3-3v-7c0-1.65-1.35-3-3-3z"></path>
 		 					</svg>
 						</button>
 
-	useEffect( () => {
-		if( showCommentBox !== false ) {
-			const postID = id;
-			dispatch( fetchComments({postID, subreddit}) );
-		}
-	}, [dispatch, showCommentBox, id, subreddit])
-
 	return (
-		<div className={ hasLoaded ? styles.postContainer : styles.postContainer + " " + shared.loading}>
+		<div className={ !isLoading ? styles.postContainer : styles.postContainer + " " + shared.loading}>
 			{
-				!hasLoaded ? post_placeholder(comment_btn) :
+				isLoading ? post_placeholder(comment_btn) :
 				<>
 					<VotesCounter>{votes}</VotesCounter>
 					<article className={styles.postWrapper} aria-label="user-post">
@@ -79,17 +68,13 @@ const Post = ({ id, name, subreddit, author, topic, time_frame, n_comments, img_
 							<div className={styles.postAuthor}> {author} </div>
 							<div> {posted_time} </div>
 							<div className={styles.commentBtnContainer}>
-								<button className={comment_btn_class} style={comment_btn_style} onClick={() => setShowCommentBox(!showCommentBox)} data-testid='show-comments-btn'>
-									<svg className={shared.icon_svg} version="1.2" baseProfile="tiny" viewBox="0 0 22 22">
-										<path d="M18 7c.542 0 1 .458 1 1v7c0 .542-.458 1-1 1h-8.829l-.171.171v-.171h-3c-.542 0-1-.458-1-1v-7c0-.542.458-1 1-1h12m0-2h-12c-1.65 0-3 1.35-3 3v7c0 1.65 1.35 3 3 3h1v3l3-3h8c1.65 0 3-1.35 3-3v-7c0-1.65-1.35-3-3-3z"></path>
-									</svg>
-								</button>
+								{comment_btn}
 								<p> {n_comments} </p>
 							</div>
 						</div>
 
 						<div className={styles.commentBox} style={commentBoxStyle} aria-label="post-comments">
-							<CommentsList postName={name}/>
+							{error ? "Can't load comments." : <CommentsList isLoading={isLoadingCom} comments={comments} />}
 						</div>
 					</article>
 				</>
@@ -98,4 +83,4 @@ const Post = ({ id, name, subreddit, author, topic, time_frame, n_comments, img_
 	);
 }
 
-export default Post;
+export default Post
