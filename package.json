@@ -10,7 +10,6 @@
     "gatsby-plugin-image": "^3.2.0",
     "gatsby-plugin-manifest": "^5.2.0",
     "gatsby-plugin-offline": "^6.2.0",
-    "gatsby-plugin-react-helmet": "^6.2.0",
     "gatsby-plugin-sharp": "^5.2.0",
     "gatsby-source-filesystem": "^5.2.0",
     "gatsby-transformer-sharp": "^5.2.0",
@@ -20,10 +19,10 @@
     "prop-types": "^15.7.2",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
-    "react-helmet": "^6.1.0",
     "react-lazy-load-image-component": "^1.5.1",
     "react-markdown": "^8.0.3",
-    "react-redux": "^8.0.5"
+    "react-redux": "^8.0.5",
+    "whatwg-fetch": "^3.6.2"
   },
   "devDependencies": {
     "@testing-library/jest-dom": "^5.12.0",

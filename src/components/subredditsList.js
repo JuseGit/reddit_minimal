@@ -21,13 +21,11 @@ const SubredditsList = ({selSubr}) => {
     setShowList(!showList)
   }
 
+  if (error) return <div>Can't load subreddits</div>
+  if (isLoading) return <div>Loading List</div>
+  if (!subreddits) return <div>No subreddit available</div>
+
   const mapSubr = subreddits => {
-    if( isLoading ) return "Loading List"
-
-    if (subreddits.length === 0) {
-      return "No subreddit available."
-    }
-
     return subreddits.map(item => (
       <li key={item.data.name} style={{ marginBottom: 0 }} data-testid="subrContent" onClick={() => selSubr(item.data.display_name)}>
         <Subreddit name={item.data.display_name} icon_url={item.data.icon_img} />

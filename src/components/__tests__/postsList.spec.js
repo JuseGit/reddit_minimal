@@ -1,73 +1,34 @@
-import React from 'react';
-import * as ReactReduxHooks from 'react-redux';
-import { render, within } from '../../test-utils.js'
-import PostsList from '../postsList.js';
+import React from "react"
+import { rest } from "msw"
+import { server } from "../../test/server"
+import { render, screen, within } from "../../test/test-utils"
+import PostsList from "../postsList.js"
 
+describe("components/postsList", () => {
+	it("renders a list of posts (@testing-library/react)", async () => {
+		render(<PostsList subreddit={"subredditTest"} filterText={""} />)
 
-describe('components/postsList', () => {
-	let initialState = {
-		subreddits: {
-			subreddits: [],
-			currentSubreddit: undefined
-		},
-		posts: {
-			posts: [],
-			hasLoadedPosts: false,
-			hasError: false
-		}
-	}
+		screen.getAllByTestId("dummy-post-listitem")
 
+		const postsList = await screen.findByRole("list")
+		const { getAllByTestId } = within(postsList)
+		const items = getAllByTestId("post-listitem")
 
-	it('renders an empty list if no post available (@testing-library/react)', () => {
-		const localInit = {
-			...initialState,
-			posts: {
-				posts: [],
-				hasLoadedPosts: true
-			}
-		}
+		expect(items.length > 0).toBeTruthy()
+	})
 
-		const { getByRole } = render(<PostsList />, {initialState: localInit});
+	it("handles error response (@testing-library/react)", async () => {
+		// force msw to return error response
+		server.use(
+			rest.get("https://www.reddit.com/r/subredditTest.json", (req, res, ctx) =>
+				res(ctx.status(500))
+			)
+		)
 
-		const postsList = getByRole('list');
+		render(<PostsList subreddit={"subredditTest"} filterText={""} />)
 
-		expect(postsList.textContent).toBe('No posts available.');
-	});
+		screen.getAllByTestId("dummy-post-listitem")
 
-	it('renders a list of posts (@testing-library/react)', () => {
-		const time_frame = { name: 'hours', val: 3 };
-
-		const localInit = {
-			...initialState,
-			posts: {
-				posts: [{name: 'Post1', topic: 'User2', time_frame: time_frame, num_comments:5}]
-			}
-		}
-
-		const { getByRole } = render(<PostsList />, {initialState: localInit});
-
-		const postsList = getByRole('list');
-		const { getAllByRole } = within(postsList);
-  		const items = getAllByRole('listitem');
-
-		expect(items.length > 0).toBeTruthy();
-	});
-
-	it('renders a list of posts after being fetched (@testing-library/react)', async () => {
-		// const posts = [{name: 'Post1', topic: 'User2', time_frame: time_frame, num_comments:5}];
-		// initialState.posts.posts = posts;
-		const localInit = {
-			...initialState,
-			subreddits: {
-				currentSubreddit: "subredditTest"
-			}
-		}
-
-		const { getByRole } = render(<PostsList />, {initialState: localInit});
-
-		const postsList = getByRole('list');
-		const items = await within(postsList).findAllByRole('listitem');
-
-		expect(items.length > 0).toBeTruthy();
-	});
-});
+		await screen.findByText(`Can't load posts.`)
+	})
+})

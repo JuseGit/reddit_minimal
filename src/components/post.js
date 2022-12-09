@@ -1,86 +1,109 @@
-import React, { useState } from 'react'
-import * as styles from './post.module.css'
-import * as shared from './sharedStyles.module.css'
-import { LazyLoadImage } from 'react-lazy-load-image-component'
-import CommentsList from './commentsList'
-import { getPostedTime } from '../lib/date_conversions'
-import VotesCounter from './votesCounter'
-import { useGetCommentsQuery } from '../store/services/api'
-
+import React, { useState } from "react"
+import * as styles from "./post.module.css"
+import * as shared from "./sharedStyles.module.css"
+import { LazyLoadImage } from "react-lazy-load-image-component"
+import CommentsList from "./commentsList"
+import { getPostedTime } from "../lib/date_conversions"
+import VotesCounter from "./votesCounter"
 
 /**
  *	Dummy used when the application is fetching data relative to this post.
  */
-const post_placeholder = ( button ) => {
+const PostPlaceholder = ({ children }) => {
 	return (
-		<>
-			<VotesCounter><span className={shared.post_dummy_meta}></span></VotesCounter>
+		<div className={`${styles.postContainer} ${shared.loading}`} data-testid="dummy-post-data">
+			<VotesCounter>
+				<span className={shared.post_dummy_meta}></span>
+			</VotesCounter>
 			<article className={styles.postWrapper} aria-label="user-post">
 				<div className={styles.postImgWrapper}>
-					<span className={shared.post_dummy_meta} style={{width:"100%", height:"5em"}} />
+					<span className={shared.post_dummy_meta} style={{ width: "100%", height: "5em" }} />
 				</div>
 				<hr className={styles.footer_sep} />
 				<div className={styles.postFooter}>
-					<span className={shared.post_dummy_meta}/>
-					<span className={shared.post_dummy_meta}/>
-					<div className={styles.commentBtnContainer} data-testid='show-comments-btn-p'>
-						{button}
-						<span className={shared.post_dummy_meta}/>
+					<span className={shared.post_dummy_meta} />
+					<span className={shared.post_dummy_meta} />
+					<div className={styles.commentBtnContainer} data-testid="show-comments-btn-p">
+						{children}
+						<span className={shared.post_dummy_meta} />
 					</div>
 				</div>
 			</article>
-		</>
+		</div>
 	)
 }
 
+const CommentsButton = ({ onClick }) => {
+	const [show, setShow] = useState(false)
+
+	const handleOnClick = () => {
+		setShow((prev) => !prev)
+		onClick()
+	}
+
+	return (
+		<button
+			className={`${shared.icon_button} ${styles.commentBoxBtn}`}
+			style={show ? { color: "blue" } : { color: "initial" }}
+			onClick={handleOnClick}
+			data-testid="show-comments-btn"
+		>
+			<svg className={shared.icon_svg} version="1.2" baseProfile="tiny" viewBox="0 0 22 22">
+				<path d="M18 7c.542 0 1 .458 1 1v7c0 .542-.458 1-1 1h-8.829l-.171.171v-.171h-3c-.542 0-1-.458-1-1v-7c0-.542.458-1 1-1h12m0-2h-12c-1.65 0-3 1.35-3 3v7c0 1.65 1.35 3 3 3h1v3l3-3h8c1.65 0 3-1.35 3-3v-7c0-1.65-1.35-3-3-3z"></path>
+			</svg>
+		</button>
+	)
+}
 
 /**
  * 	Post component. Renders a link in a subreddit.
  */
-const Post = ({ isLoading, id, name, subreddit, author, topic, time_frame, n_comments, img_url, votes }) => {
+const Post = ({
+	id,
+	name,
+	subreddit,
+	author,
+	topic,
+	time_frame,
+	n_comments,
+	img_url,
+	votes,
+	isDummy,
+}) => {
 	const [skip, setSkip] = useState(true)
-	const { data: comments, error, isLoading: isLoadingCom } = useGetCommentsQuery({id, subreddit}, {skip})
-	let commentBoxStyle = !skip ? {display: "block", visibility: "visible"} : {display: "none", visibility: "hidden"}
+	let commentBoxStyle = !skip
+		? { display: "block", visibility: "visible" }
+		: { display: "none", visibility: "hidden" }
 	const posted_time = time_frame ? getPostedTime(time_frame) : " "
-	const comment_btn_style = !skip ? { color: "blue" } : { color: "initial" }
-	const comment_btn_class = shared.icon_button + " " + styles.commentBoxBtn
-	const comment_btn = <button className={comment_btn_class} style={comment_btn_style} onClick={() => setSkip((prev) => !prev)} data-testid='show-comments-btn'>
-							<svg className={shared.icon_svg} version="1.2" baseProfile="tiny" viewBox="0 0 22 22">
-		 						<path d="M18 7c.542 0 1 .458 1 1v7c0 .542-.458 1-1 1h-8.829l-.171.171v-.171h-3c-.542 0-1-.458-1-1v-7c0-.542.458-1 1-1h12m0-2h-12c-1.65 0-3 1.35-3 3v7c0 1.65 1.35 3 3 3h1v3l3-3h8c1.65 0 3-1.35 3-3v-7c0-1.65-1.35-3-3-3z"></path>
-		 					</svg>
-						</button>
 
-	return (
-		<div className={ !isLoading ? styles.postContainer : styles.postContainer + " " + shared.loading}>
-			{
-				isLoading ? post_placeholder(comment_btn) :
-				<>
-					<VotesCounter>{votes}</VotesCounter>
-					<article className={styles.postWrapper} aria-label="user-post">
-						<p className={styles.postTopic}>
-							{topic}
-						</p>
-						<div className={styles.postImgWrapper}>
-							{img_url && <LazyLoadImage alt="post image alt" src={img_url} object-fit="cover"/>}
-						</div>
-						<hr className={styles.footer_sep} />
-						<div className={styles.postFooter}>
-							<div className={styles.postAuthor}> {author} </div>
-							<div> {posted_time} </div>
-							<div className={styles.commentBtnContainer}>
-								{comment_btn}
-								<p> {n_comments} </p>
-							</div>
-						</div>
+	return isDummy ? (
+		<PostPlaceholder>
+			<CommentsButton />
+		</PostPlaceholder>
+	) : (
+		<div className={styles.postContainer} data-testid="post-data">
+			<VotesCounter>{votes}</VotesCounter>
+			<article className={styles.postWrapper} aria-label="user-post">
+				<p className={styles.postTopic}>{topic}</p>
+				<div className={styles.postImgWrapper}>
+					{img_url && <LazyLoadImage alt="post image alt" src={img_url} object-fit="cover" />}
+				</div>
+				<hr className={styles.footer_sep} />
+				<div className={styles.postFooter}>
+					<div className={styles.postAuthor}> {author} </div>
+					<div> {posted_time} </div>
+					<div className={styles.commentBtnContainer}>
+						<CommentsButton onClick={() => setSkip((prev) => !prev)} />
+						<p> {n_comments} </p>
+					</div>
+				</div>
 
-						<div className={styles.commentBox} style={commentBoxStyle} aria-label="post-comments">
-							{error ? "Can't load comments." : <CommentsList isLoading={isLoadingCom} comments={comments} />}
-						</div>
-					</article>
-				</>
-			}
+				<div className={styles.commentBox} style={commentBoxStyle} aria-label="post-comments">
+					<CommentsList subreddit={subreddit} postID={id} skip={skip} />
+				</div>
+			</article>
 		</div>
-	);
+	)
 }
 
 export default Post

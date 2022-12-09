@@ -1,43 +1,22 @@
-import { rest } from 'msw';
-import { setupServer } from 'msw/node';
+import "whatwg-fetch"
+import { server } from "./src/test/server"
+import { api } from "./src/store/services/api"
+import { setupStore } from "./src/store/storeSetup"
 
-
-const server = setupServer (
-	rest.get('https://www.reddit.com/subreddits.json', (req, res, ctx) => {
-		const query = req.url.searchParams;
-		const limit = query.get("limit");
-		const t = query.get("t");
-
-		return res (
-			ctx.status(200),
-			ctx.json( {data: {children: [{data: {name: 'testkey', subreddit:'test'}}] }} )
-		)
-	}),
-	rest.get('https://www.reddit.com/r/subredditTest.json', (req, res, ctx) => {
-
-		return res (
-			ctx.status(200),
-			ctx.json( {data: {children: [{data: {name: 'testkey'}}] }} )
-		)
-	}),
-
-	rest.get('https://www.reddit.com/r/subredditTest/comments/postIDtest.json', (req, res, ctx) => {
-
-		return res (
-			ctx.status(200),
-			ctx.json( [{}, {data: {children: [{kind:'test_kind', data: {link_id: 'link_id', id: 'testkey'}}] }}] )
-		)
-	})
-)
+const store = setupStore({})
 
 // Establish API mocking before all tests.
 beforeAll(() => {
-	server.listen({onUnhandledRequest: 'warn'});
+	server.listen({ onUnhandledRequest: "warn" })
 })
 
 // Reset any request handlers that we may add during the tests,
 // so they don't affect other tests.
-afterEach(() => server.resetHandlers())
+afterEach(() => {
+	server.resetHandlers()
+	// This is the solution to clear RTK Query cache after each test
+	store.dispatch(api.util.resetApiState())
+})
 
 // Clean up after the tests are finished.
 afterAll(() => server.close())

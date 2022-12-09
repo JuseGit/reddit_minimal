@@ -1,6 +1,5 @@
 import { createApi, fetchBaseQuery } from "@reduxjs/toolkit/query/react"
 
-
 // Define a service using a base URL and expected endpoints
 export const api = createApi({
 	reducerPath: "redditApi",
@@ -8,18 +7,18 @@ export const api = createApi({
 	keepUnusedDataFor: 5,
 	endpoints: (builder) => ({
 		getSubreddits: builder.query({
-			query: () => `subreddits.json?limit=10&t=year`,
-			transformResponse: (response, meta, arg) => response.data.children
+			query: () => ({ url: `subreddits.json?limit=10&t=year` }),
+			transformResponse: (response, meta, arg) => response.data.children,
 		}),
 		getPosts: builder.query({
 			query: (subreddit) => `r/${subreddit}.json`,
-			transformResponse: (response, meta, arg) => response.data.children
+			transformResponse: (response, meta, arg) => response.data.children,
 		}),
 		getComments: builder.query({
-			query: ({subreddit, id}) => `r/${subreddit}/comments/${id}.json`,
+			query: ({ subreddit, postID }) => `r/${subreddit}/comments/${postID}.json`,
 			transformResponse: (response, meta, arg) => {
-				if(response[1].kind !== "more") return response[1].data.children
-			}
+				if (response[1].kind !== "more") return response[1].data.children
+			},
 		}),
 	}),
 })

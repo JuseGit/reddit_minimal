@@ -1,49 +1,35 @@
-import React from 'react';
-import * as ReactReduxHooks from 'react-redux';
-import { render, within } from '../../test-utils.js'
-import CommentsList from '../commentsList.js';
+import React from "react"
+import { rest } from "msw"
+import { server } from "../../test/server"
+import { render, screen, within } from "../../test/test-utils"
+import CommentsList from "../commentsList.js"
 
+describe("components/postsList", () => {
+	it("renders a list of comments (@testing-library/react)", async () => {
+		render(<CommentsList subreddit={"subredditTest"} postID={"postIDtest"} skip={false} />)
 
-describe('components/commentsList', () => {
-	let initialState = {
-		comments : {
-			comments: {},
-			isLoadingComments: false,
-			hasError: false
-		}
-	}
+		screen.getAllByTestId("dummy-comment-listitem")
 
+		const commentsList = await screen.findByRole("list")
+		const { getAllByTestId } = within(commentsList)
+		const items = getAllByTestId("comment-listitem")
 
-	it('renders an empty list if no comments available (@testing-library/react)', () => {
-		const { getByRole } = render(<CommentsList postName="test" />, {initialState: initialState});
+		expect(items.length > 0).toBeTruthy()
+	})
 
-		const commentsList = getByRole('list');
+	it("handles error response (@testing-library/react)", async () => {
+		// force msw to return error response
+		server.use(
+			rest.get(
+				"https://www.reddit.com/r/subredditTest/comments/postIDtest.json",
+				(req, res, ctx) => res(ctx.status(500))
+			)
+		)
 
-		expect(commentsList.textContent).toBe('');
-	});
+		render(<CommentsList subreddit={"subredditTest"} postID={"postIDtest"} skip={false} />)
 
-	it('renders a list of comments (@testing-library/react)', () => {
-		// const time_frame = { name: 'hours', val: 3 };
-		// const comments = {
-		// 	postIDtest: [{id: 'idcomment', author: 'authortest', text:'bodytext', time_frame: time_frame}]
-		// }
-		//
-		// initialState.comments.comments = comments;
-		const localInit = {
-			...initialState,
-			comments: {
-				comments:  {
-					postIDtest: [{id: 'idcomment'}]
-				}
-			}
-		}
+		screen.getAllByTestId("dummy-comment-listitem")
 
-		const { getByRole } = render(<CommentsList postName="postIDtest"/>, {initialState: localInit});
-
-		const commentsList = getByRole('list');
-		const { getAllByRole } = within(commentsList);
-  		const items = getAllByRole('listitem');
-
-		expect(items.length > 0).toBeTruthy();
-	});
-});
+		await screen.findByText(`Can't load comments.`)
+	})
+})

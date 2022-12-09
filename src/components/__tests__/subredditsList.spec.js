@@ -1,49 +1,31 @@
-import React from 'react';
-import { render, screen, fireEvent, within, waitFor } from '../../test-utils.js';
-import * as ReactReduxHooks from 'react-redux';
-import SubredditsList from '../subredditsList.js';
+import React from "react"
+import { rest } from "msw"
+import { server } from "../../test/server"
+import { render, screen, within } from "../../test/test-utils"
+import SubredditsList from "../subredditsList"
 
+describe("components/subredditsList", () => {
+	it("renders a list of subreddits (@testing-library/react)", async () => {
+		render(<SubredditsList />)
 
-describe('components/subredditsList', () => {
-	let initialState = {
-		subreddits: {
-			subreddits: []
-		}
-	}
+		screen.getByText("Loading List")
+		const subrList = await screen.findByRole("list")
 
-	it('renders an empty list if no subreddits available (@testing-library/react)', () => {
-		const { getByRole } = render(<SubredditsList />, {initialState: initialState});
+		const { getAllByRole } = within(subrList)
+		const items = getAllByRole("listitem")
+		expect(items.length > 0).toBeTruthy()
+	})
 
-		const subrList = getByRole('list');
+	it("handles error response (@testing-library/react)", async () => {
+		// force msw to return error response
+		server.use(
+			rest.get("https://www.reddit.com/subreddits.json", (req, res, ctx) => res(ctx.status(500)))
+		)
 
-		expect(subrList.textContent).toBe('No subreddit available.');
-	});
+		render(<SubredditsList />)
 
-	it('renders a list of subreddits (@testing-library/react)', () => {
-		//initialState.subreddits.subreddits = [{name:'sub1', subreddit: 'subreddit2'}];
-		const localInit = {
-			...initialState,
-			subreddits: {
-				subreddits:  [{name:'sub1', subreddit: 'subreddit2'}]
-			}
-		}
+		screen.getByText("Loading List")
 
-		const { getByRole } = render(<SubredditsList />, {initialState: localInit});
-
-		const subrList = getByRole( 'list' );
-		const { getAllByRole } = within(subrList);
-  		const items = getAllByRole('listitem');
-
-		expect(items.length > 0).toBeTruthy();
-		//expect(items.[0]).toHaveTextContent('subreddit2');
-	});
-
-	it('renders a list of subreddits when fetching is done (@testing-library/react)', async () => {
-		const { getByRole } = render(<SubredditsList />);
-
-		const subrList = getByRole( 'list' );
-		const items = await within(subrList).findAllByRole('listitem');
-
-		expect(items.length > 0).toBeTruthy();
-	});
-});
+		await screen.findByText(`Can't load subreddits`)
+	})
+})
