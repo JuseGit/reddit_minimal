@@ -2,7 +2,7 @@ import React from "react"
 import { rest } from "msw"
 import { server } from "../../test/server"
 import { render, screen, within } from "../../test/test-utils"
-import PostsList from "../postsList.js"
+import PostsList from "../postsList"
 
 describe("components/postsList", () => {
 	it("renders a list of posts (@testing-library/react)", async () => {

@@ -2,7 +2,7 @@ import React from "react"
 import { rest } from "msw"
 import { server } from "../../test/server"
 import { render, screen, within } from "../../test/test-utils"
-import CommentsList from "../commentsList.js"
+import CommentsList from "../commentsList"
 
 describe("components/postsList", () => {
 	it("renders a list of comments (@testing-library/react)", async () => {
