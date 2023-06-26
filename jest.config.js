@@ -1,6 +1,6 @@
 module.exports = {
 	transform: {
-		"^.+\\.jsx?$": `<rootDir>/jest-preprocess.js`,
+		"^.+\\.[jt]sx?$": "<rootDir>/jest-preprocess.js",
 	},
 	moduleNameMapper: {
 		".+\\.(css|styl|less|sass|scss)$": `identity-obj-proxy`,
@@ -17,5 +17,5 @@ module.exports = {
 		url: `http://localhost`,
 	},
 	setupFiles: [`<rootDir>/loadershim.js`],
-	setupFilesAfterEnv: ["./jest.setup.js", "<rootDir>src/test/test-utils.js"],
+	setupFilesAfterEnv: ["./jest.setup.js", "<rootDir>src/test/test-utils.tsx"],
 }
